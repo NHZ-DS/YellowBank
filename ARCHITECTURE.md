@@ -6,8 +6,6 @@ Bienvenue dans la documentation d'architecture de l'application **Yello**, le co
 
 ## 1. Schéma Global de l'Architecture
 
-![Architecture Globale Yello](docs/architecture.png)
-
 ### Diagramme de flux et interactions (Mermaid)
 
 ```mermaid
