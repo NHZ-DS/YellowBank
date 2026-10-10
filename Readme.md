@@ -9,7 +9,7 @@ Application bancaire et d'investissement nouvelle génération combinant une int
 Consultez le document complet d'architecture avec schéma visuel et description détaillée de chaque fichier :  
 👉 **[Lire la documentation complète : ARCHITECTURE.md](ARCHITECTURE.md)**
 
-![Architecture Globale Yello](docs/architecture.png)
+
 
 ---
 
