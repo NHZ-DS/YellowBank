@@ -14,64 +14,55 @@ Bienvenue dans la documentation d'architecture de l'application **Yello**, le co
 flowchart TD
     subgraph Frontend["📱 Frontend — Streamlit (streamlit_app/)"]
         A[Login.py\nConnexion & Inscription] --> B[Home.py\nAccueil & Univers Banque]
-        B --> C[Questionnaire.py\nOnboarding & Profil financier]
-        C --> D[Dashboard.py\nProgression, XP & Badges]
-        D --> E[Chat.py\nMarcel Augmenté]
-        D --> F[Profile.py\nDonnées & Opt-in RGPD]
+        B --> C[pages/1_Questionnaire.py\nProfil financier]
+        C --> D[pages/2_Situation.py\nDiagnostic Visuel]
+        D --> E[pages/3_Parcours.py\nLe Plateau d'Évolution]
+        
+        HTML[[plateau_interactif.html\n(Intégré via composants)]] -.->|Injection d'état| E
+        
+        E --> F1[pages/4_ParcoursCourant.py\nBudget & Épargne]
+        E --> F2[pages/5_ParcoursPEA.py\nBourse & PEA]
+        E --> F3[pages/6_ParcoursProjet.py\nFinancement & Aides]
+        
+        F1 --> G[pages/7_Dashboard.py\nBadges & XP]
+        F2 --> G
+        F3 --> G
+        
+        G --> H[pages/8_Chat.py\nAgent Marcel]
+        
         API_SVC[services/api_service.py\nClient HTTP / Async]
     end
 
     subgraph Backend["⚙️ Backend — FastAPI (fastapi_backend/)"]
-        MAIN[main.py\nPoint d'entrée API & CORS]
+        MAIN[main.py\nAPI & LLM Mock]
         
-        subgraph Routers["Routers API"]
-            R_AUTH[routers/auth_router.py]
-            R_ONB[routers/onboarding_router.py]
-            R_CHAT[routers/chat_router.py]
-            R_GAM[routers/gamification_router.py]
-            R_PROF[routers/profile_router.py]
+        subgraph ChatEngine["Système Multi-Agents & RAG"]
+            ORCH[services/chat_service/orchestrator.py]
+            A_RAG[agents/rag_agent.py\n+ Score de Confiance]
+            A_FAQ[agents/faq_agent.py\nRéponses instantanées]
+            A_CHAT[agents/chitchat_agent.py\nChitchat]
+            A_MARKET[agents/market_agent.py\nDonnées Marché]
+            LLM[services/chat_service/llm_service.py\nOllama Local]
         end
 
-        subgraph Services["Services Métier"]
-            S_AUTH[services/auth_service.py]
-            S_ONB[services/onboarding_service.py]
-            S_GAM[services/gamification_service.py]
-            S_COMP[services/compliance_service.py]
-            S_PROF[services/profile_service.py]
-            
-            subgraph ChatEngine["Système Multi-Agents"]
-                ORCH[services/chat_service/orchestrator.py]
-                A_RAG[agents/rag_agent.py\n+ Score de Confiance]
-                A_FAQ[agents/faq_agent.py\nRéponses instantanées]
-                A_CHAT[agents/chitchat_agent.py\nEncouragements & Ton amical]
-                OAI[services/chat_service/openai_service.py]
-            end
-        end
-
-        subgraph Data["Données & RAG"]
+        subgraph Data["Base de Connaissances (Markdown)"]
             KB[data/knowledge_base.py]
-            DOCS[(data/documents/\nGuides, Tarifs, Aides)]
-            VEC[(data/embeddings/\nIndex Vectoriel)]
+            DOCS[(data/documents/\nGuides Bourse, Budget, Aides, Sécurité)]
         end
     end
 
     %% Connexions
-    Frontend -.->|Requêtes REST JSON| Routers
-    R_AUTH --> S_AUTH
-    R_ONB --> S_ONB
-    R_CHAT --> ORCH
-    R_GAM --> S_GAM
-    R_PROF --> S_PROF
-    R_PROF --> S_COMP
-
+    Frontend -.->|Requêtes REST JSON| MAIN
+    MAIN --> ORCH
     ORCH --> A_RAG
     ORCH --> A_FAQ
     ORCH --> A_CHAT
+    ORCH --> A_MARKET
+    
     A_RAG --> KB
     KB --> DOCS
-    KB --> VEC
-    A_CHAT --> OAI
-    A_RAG --> OAI
+    A_RAG --> LLM
+    A_CHAT --> LLM
 ```
 
 ---
