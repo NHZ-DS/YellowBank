@@ -17,18 +17,28 @@ if "user" not in st.session_state or not st.session_state["user"]:
     login_res = api_service.login("demo", "demo123")
     st.session_state["user"] = login_res.get("user", {})
 
-st.title("🧭 Le Plateau d'Évolution")
-st.write("Retrouvez l'intégralité de vos parcours financiers sur le plateau interactif ci-dessous.")
+st.markdown("""
+<style>
+/* Supprimer les marges Streamlit pour un effet "Pleine page / Jeu natif" */
+.block-container {
+    padding: 0rem !important;
+    max-width: 100% !important;
+}
+header[data-testid="stHeader"] {
+    display: none !important;
+}
+/* Cacher proprement le bloc de boutons de navigation */
+.st-key-hidden_btns {
+    display: none !important;
+}
+</style>
+""", unsafe_allow_html=True)
 
-# Boutons invisibles pour la navigation depuis le Javascript
-st.button("HIDDEN_GO_BUDGET", key="hidden_go_budget", on_click=lambda: st.switch_page("pages/4_ParcoursCourant.py"))
-st.button("HIDDEN_GO_PEA", key="hidden_go_pea", on_click=lambda: st.switch_page("pages/5_ParcoursPEA.py"))
-st.button("HIDDEN_GO_PROJETS", key="hidden_go_projets", on_click=lambda: st.switch_page("pages/6_ParcoursProjet.py"))
-
-st.markdown("""<style>
-button:contains('HIDDEN_GO_') { display: none !important; }
-div:has(button[kind="secondary"]):has(div:contains("HIDDEN_GO_")) { display: none !important; }
-</style>""", unsafe_allow_html=True)
+# Boutons invisibles cachés dans un conteneur ciblé
+with st.container(key="hidden_btns"):
+    st.button("HIDDEN_GO_BUDGET", key="hidden_go_budget", on_click=lambda: st.switch_page("pages/4_ParcoursCourant.py"))
+    st.button("HIDDEN_GO_PEA", key="hidden_go_pea", on_click=lambda: st.switch_page("pages/5_ParcoursPEA.py"))
+    st.button("HIDDEN_GO_PROJETS", key="hidden_go_projets", on_click=lambda: st.switch_page("pages/6_ParcoursProjet.py"))
 
 # On lit le fichier HTML interactif que nous avons généré et on l'intègre dans Streamlit
 html_path = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))), "plateau_interactif.html")
