@@ -18,7 +18,7 @@ flowchart TD
         C --> D[pages/2_Situation.py\nDiagnostic Visuel]
         D --> E[pages/3_Parcours.py\nLe Plateau d'Évolution]
         
-        HTML[[plateau_interactif.html\n(Intégré via composants)]] -.->|Injection d'état| E
+        HTML[["plateau_interactif.html\n(Intégré via composants)"]] -.->|Injection d'état| E
         
         E --> F1[pages/4_ParcoursCourant.py\nBudget & Épargne]
         E --> F2[pages/5_ParcoursPEA.py\nBourse & PEA]
@@ -47,7 +47,7 @@ flowchart TD
 
         subgraph Data["Base de Connaissances (Markdown)"]
             KB[data/knowledge_base.py]
-            DOCS[(data/documents/\nGuides Bourse, Budget, Aides, Sécurité)]
+            DOCS[("data/documents/\nGuides Bourse, Budget, Aides, Sécurité")]
         end
     end
 
