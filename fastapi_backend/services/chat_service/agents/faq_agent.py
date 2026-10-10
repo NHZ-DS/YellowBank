@@ -8,7 +8,7 @@ FAQ_DATABASE = {
     "opposition": {
         "keywords": ["opposition", "perte carte", "vol carte", "bloquer carte"],
         "answer": (
-            "Pour faire opposition sur votre carte YellowBank immédiatement :\n\n"
+            "Pour faire opposition sur votre carte Yello immédiatement :\n\n"
             "1. Rendez-vous dans votre application > Menu Carte > 'Verrouiller temporairement' ou 'Faire opposition'.\n"
             "2. Ou contactez le serveur vocal d'opposition disponible 24h/24 au 09 69 39 92 91.\n\n"
             "Une nouvelle carte vous sera automatiquement envoyée sous 72h."
@@ -26,7 +26,7 @@ FAQ_DATABASE = {
     "decouvert": {
         "keywords": ["decouvert", "agios", "autorise"],
         "answer": (
-            "L'autorisation de découvert par défaut chez YellowBank est de 500 € au taux de 7,50 % par an. "
+            "L'autorisation de découvert par défaut chez Yello est de 500 € au taux de 7,50 % par an. "
             "Vous pouvez demander l'augmentation de votre découvert autorisé dans Profil > Paramètres du compte."
         ),
         "action": ActionSuggestion(action_type="OVERDRAFT", label="⚙️ Gérer mon découvert")

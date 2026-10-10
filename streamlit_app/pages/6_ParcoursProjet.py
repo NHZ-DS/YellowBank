@@ -1,9 +1,9 @@
-"""Parcours 3 : Projets & Aides — Yellow."""
+"""Parcours 3 : Projets & Aides — Yello."""
 
 import streamlit as st
 from services.api_service import api_service
 
-st.set_page_config(page_title="Parcours 3 : Projets & Aides — Yellow", page_icon="🎓", layout="wide")
+st.set_page_config(page_title="Parcours 3 : Projets & Aides — Yello", page_icon="🎓", layout="wide")
 
 try:
     with open("static/css/style.css", "r", encoding="utf-8") as f:
@@ -18,7 +18,7 @@ if "user" not in st.session_state or not st.session_state["user"]:
 user = st.session_state["user"]
 
 st.title("🎓 Parcours 3 : Projets & Aides Financières")
-st.write("Mobilisez vos droits publics et les avantages bancaires exclusifs YellowBank.")
+st.write("Mobilisez vos droits publics et les avantages bancaires exclusifs Yello.")
 
 st.divider()
 

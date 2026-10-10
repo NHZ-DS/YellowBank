@@ -3,7 +3,7 @@
 import streamlit as st
 from services.api_service import api_service
 
-st.set_page_config(page_title="Mon Profil — Yellow", page_icon="👤", layout="wide")
+st.set_page_config(page_title="Mon Profil — Yello", page_icon="👤", layout="wide")
 
 with open("static/css/style.css", "r", encoding="utf-8") as f:
     st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
@@ -25,8 +25,8 @@ with col_id:
     st.subheader("Identité & Coordonnées")
     st.write(f"**Nom complet :** {user.get('full_name', 'Alexandre Dupont')}")
     st.write(f"**Identifiant :** `{user.get('username', 'demo')}`")
-    st.write(f"**Email sécurisé :** `{user.get('email', 'demo@yellowbank.fr')}`")
-    st.write(f"**IBAN YellowBank :** `FR76 3000 4001 2345 6789 01`")
+    st.write(f"**Email sécurisé :** `{user.get('email', 'demo@yello.fr')}`")
+    st.write(f"**IBAN Yello :** `FR76 3000 4001 2345 6789 01`")
 
 with col_fin:
     st.subheader("Situation Financière")
@@ -42,7 +42,7 @@ st.divider()
 # =========================================================================
 st.subheader("🛡️ Confidentialité & Espace Conseiller (RGPD)")
 st.write(
-    "Chez YellowBank, vous gardez le contrôle total sur vos données personnelles. "
+    "Chez Yello, vous gardez le contrôle total sur vos données personnelles. "
     "Vous pouvez choisir d'autoriser ou de refuser que votre conseiller bancaire humain "
     "ait accès à une synthèse de vos projets et questions posées à l'IA."
 )
@@ -50,7 +50,7 @@ st.write(
 current_consent = user.get("advisor_share_consent", True)
 
 new_consent = st.checkbox(
-    "J'autorise YellowBank à partager une synthèse de mon activité et de mes projets avec mon conseiller bancaire.",
+    "J'autorise Yello à partager une synthèse de mon activité et de mes projets avec mon conseiller bancaire.",
     value=current_consent
 )
 

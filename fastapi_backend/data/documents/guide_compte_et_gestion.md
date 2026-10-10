@@ -1,7 +1,7 @@
-# 💳 Guide de Gestion Bancaire Quotidienne — YellowBank
+# 💳 Guide de Gestion Bancaire Quotidienne — Yello
 
 ## 1. Fonctionnement du Compte Courant
-Le compte courant YellowBank permet la gestion fluide de vos flux financiers quotidiens.
+Le compte courant Yello permet la gestion fluide de vos flux financiers quotidiens.
 - **Tenue de compte :** Gratuite sous réserve d'au moins une opération de paiement par carte par mois.
 - **IBAN Français :** Format normalisé `FR76 3000 4001 ...` sécurisé pour la domiciliation de salaires, bourses et prélèvements automatiques.
 - **Relevés de compte :** Disponibles au format numérique le 1er de chaque mois dans l'espace client.
@@ -12,7 +12,7 @@ Le compte courant YellowBank permet la gestion fluide de vos flux financiers quo
 - **Plafond de virement instantané par défaut :** 2 000 € par opération et 5 000 € par période de 24 heures (modifiable avec validation forte 3D Secure).
 
 ## 3. Cartes Bancaires & Plafonds
-YellowBank propose des cartes internationales Visa / Mastercard avec technologie sans contact et paiement mobile (Apple Pay, Google Pay).
+Yello propose des cartes internationales Visa / Mastercard avec technologie sans contact et paiement mobile (Apple Pay, Google Pay).
 - **Plafond de paiement :** 2 500 € sur 30 jours glissants par défaut.
 - **Plafond de retrait DAB :** 500 € sur 7 jours glissants.
 - **Paiements sans contact :** Maximum 50 € par transaction sans code PIN. Au-delà d'un cumul de 150 € sans contact, la saisie du code confidentiel à 4 chiffres est obligatoirement requise.
@@ -24,7 +24,7 @@ YellowBank propose des cartes internationales Visa / Mastercard avec technologie
 - **Découvert non autorisé :** En cas de dépassement, le taux majoré légal s'applique (14,90 %) avec commission d'intervention de 8,00 € par opération rejetée (plafonnée à 80 €/mois).
 
 ## 5. Paramétrage des Alertes de Solde
-L'application Yellow permet de définir des alertes intelligentes pour garder le contrôle de son budget :
+L'application Yello permet de définir des alertes intelligentes pour garder le contrôle de son budget :
 - **Alerte solde bas :** Notification push ou SMS immédiate dès que le solde disponible passe en dessous d'un seuil personnalisé (ex: 50 € ou 100 €).
 - **Alerte dépense majeure :** Alerte envoyée pour tout débit unitaire supérieur à 150 €.
 - **Catégorisation automatique :** Les transactions sont triées par postes de dépenses (Alimentation, Logement, Transports, Loisirs, Abonnements).

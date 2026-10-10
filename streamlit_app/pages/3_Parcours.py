@@ -1,11 +1,11 @@
-"""Page de Sélection de Parcours — Yellow."""
+"""Page de Sélection de Parcours — Yello."""
 
 import streamlit as st
 import streamlit.components.v1 as components
 import os
 from services.api_service import api_service
 
-st.set_page_config(page_title="3. Le Plateau — Yellow", page_icon="🧭", layout="wide")
+st.set_page_config(page_title="3. Le Plateau — Yello", page_icon="🧭", layout="wide")
 
 try:
     with open("static/css/style.css", "r", encoding="utf-8") as f:

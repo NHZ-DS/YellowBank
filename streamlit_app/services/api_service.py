@@ -37,7 +37,7 @@ class ApiService:
                 "user": {
                     "id": 1,
                     "username": username or "demo",
-                    "email": f"{username or 'demo'}@yellowbank.fr",
+                    "email": f"{username or 'demo'}@yello.fr",
                     "full_name": "Alexandre Dupont",
                     "role": "client",
                     "balance": 1450.80,
@@ -241,7 +241,7 @@ class ApiService:
         return {
             "authorized": True,
             "client_name": "Alexandre Dupont",
-            "client_email": "demo@yellowbank.fr",
+            "client_email": "demo@yello.fr",
             "current_track": "ÉPARGNER & BUDGET",
             "financial_summary": {
                 "monthly_income": "2 600,00 €",

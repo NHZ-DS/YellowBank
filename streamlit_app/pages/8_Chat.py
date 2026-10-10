@@ -1,9 +1,9 @@
-"""Page de Chat avec le Marcel — Yellow."""
+"""Page de Chat avec le Marcel — Yello."""
 
 import streamlit as st
 from services.api_service import api_service
 
-st.set_page_config(page_title="8. Marcel — Yellow", page_icon="💬", layout="wide")
+st.set_page_config(page_title="8. Marcel — Yello", page_icon="💬", layout="wide")
 
 try:
     with open("static/css/style.css", "r", encoding="utf-8") as f:
@@ -18,7 +18,7 @@ if "user" not in st.session_state or not st.session_state["user"]:
 user = st.session_state["user"]
 
 st.title("💬 Marcel")
-st.caption("🛡️ Réponses officielles basées sur les guides certifiés Yellow (Bourse, PEA, Budget, Prêts & Aides d'État).")
+st.caption("🛡️ Réponses officielles basées sur les guides certifiés Yello (Bourse, PEA, Budget, Prêts & Aides d'État).")
 
 if "chat_messages" not in st.session_state:
     st.session_state["chat_messages"] = [
@@ -51,7 +51,7 @@ prompt = st.chat_input("Posez votre question (ex: Quels sont les avantages du PE
 if prompt:
     st.session_state["chat_messages"].append({"role": "user", "content": prompt})
 
-    with st.spinner("Recherche dans les guides certifiés Yellow..."):
+    with st.spinner("Recherche dans les guides certifiés Yello..."):
         resp = api_service.send_chat_message(
             user_id=user.get("id", 1),
             message=prompt,

@@ -1,4 +1,4 @@
-# 📈 Guide Pratique du PEA & des 6 Niveaux de Progression — YellowBank
+# 📈 Guide Pratique du PEA & des 6 Niveaux de Progression — Yello
 
 ## 1. Cadre Réglementaire du PEA (Plan d'Épargne en Actions)
 Le Plan d'Épargne en Actions est une enveloppe d'investissement réglementée permettant d'investir sur les marchés boursiers européens tout en bénéficiant d'un cadre fiscal privilégié.
@@ -32,4 +32,4 @@ Le Plan d'Épargne en Actions est une enveloppe d'investissement réglementée p
 
 ### 👑 Niveau 6 — Le Maître de l'indépendance : devenir autonome
 - **Objectif :** Accompagnement dans la durée via des bilans périodiques pour maintenir une gestion autonome, réfléchie et sereine de son patrimoine.
-- 🎖️ **Badge final :** Yellow Master
+- 🎖️ **Badge final :** Yello Master

@@ -1,4 +1,4 @@
-"""Point d'entrée principal de l'application FastAPI Yellow (YellowBank)."""
+"""Point d'entrée principal de l'application FastAPI Yello (Yello)."""
 
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
@@ -11,8 +11,8 @@ from services.gamification_service import gamification_service_instance
 
 # Initialisation de l'application FastAPI
 app = FastAPI(
-    title="🏝️ Yellow — API Bancaire & IA Conversationnelle",
-    description="Backend microservices pour YellowBank combinant SQL Server, Multi-agents RAG et Gamification.",
+    title="🏝️ Yello — API Bancaire & IA Conversationnelle",
+    description="Backend microservices pour Yello combinant SQL Server, Multi-agents RAG et Gamification.",
     version="1.0.0"
 )
 
@@ -36,7 +36,7 @@ app.include_router(profile_router.router)
 @app.on_event("startup")
 def on_startup():
     """Initialise les tables dans SQL Server et insère les données de démarrage si nécessaire."""
-    print("[Startup] Demarrage de l'API Yellow...")
+    print("[Startup] Demarrage de l'API Yello...")
     try:
         # Création automatique des tables
         Base.metadata.create_all(bind=engine)
@@ -51,7 +51,7 @@ def on_startup():
             if not demo_user:
                 demo_user = UserModel(
                     username="demo",
-                    email="demo@yellowbank.fr",
+                    email="demo@yello.fr",
                     full_name="Alexandre Dupont",
                     hashed_password=hash_password("demo123"),
                     role="client",
@@ -72,8 +72,8 @@ def on_startup():
                 b = UserBadgeModel(
                     user_id=demo_user.id,
                     badge_name="Bienvenue a bord",
-                    badge_icon="[Yellow]",
-                    description="A rejoint l'aventure Yellow."
+                    badge_icon="[Yello]",
+                    description="A rejoint l'aventure Yello."
                 )
                 db.add(b)
                 db.commit()
@@ -88,7 +88,7 @@ def on_startup():
 def root():
     """Vérification de l'état de santé du backend."""
     return {
-        "app": "Yellow API (YellowBank)",
+        "app": "Yello API (Yello)",
         "status": "healthy",
         "version": "1.0.0",
         "docs_url": "/docs"

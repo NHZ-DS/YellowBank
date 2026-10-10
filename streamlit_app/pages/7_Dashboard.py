@@ -1,9 +1,9 @@
-"""Page de Dashboard Global & Progression — Yellow."""
+"""Page de Dashboard Global & Progression — Yello."""
 
 import streamlit as st
 from services.api_service import api_service
 
-st.set_page_config(page_title="7. Dashboard Global — Yellow", page_icon="📊", layout="wide")
+st.set_page_config(page_title="7. Dashboard Global — Yello", page_icon="📊", layout="wide")
 
 try:
     with open("static/css/style.css", "r", encoding="utf-8") as f:
@@ -66,7 +66,7 @@ with c_b4:
     has_master = xp >= 400
     st.markdown(f"""
     <div class="mission-card {'mission-completed' if has_master else ''}">
-        <h4 style="margin-top:0; color:white;">👑 Yellow Master</h4>
+        <h4 style="margin-top:0; color:white;">👑 Yello Master</h4>
         <p style="font-size:12px; color:#94A3B8;">Certification ultime d'autonomie.</p>
         <span style="color:{'#10B981' if has_master else '#64748B'}; font-weight:600; font-size:12px;">{'✓ Badge Acquis' if has_master else 'À venir'}</span>
     </div>

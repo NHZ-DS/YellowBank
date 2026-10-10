@@ -13,7 +13,7 @@ class ConversationModel(Base):
 
     id = Column(Integer, primary_key=True, index=True, autoincrement=True)
     user_id = Column(Integer, ForeignKey("users.id"), index=True, nullable=False)
-    title = Column(String(150), default="Échange avec Yellow")
+    title = Column(String(150), default="Échange avec Yello")
     created_at = Column(DateTime, default=datetime.utcnow)
     updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
 

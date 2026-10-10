@@ -37,7 +37,7 @@ class LLMService:
                 text_block = " ".join(lines)
                 if len(text_block) > 450:
                     text_block = text_block[:450] + "..."
-                return f"Voici les informations officielles de l'écosystème YellowBank concernant votre question :\n\n{text_block}"
+                return f"Voici les informations officielles de l'écosystème Yello concernant votre question :\n\n{text_block}"
 
             return (
                 "Voici les éléments officiels extraits de nos guides certifiés pour vous répondre. "

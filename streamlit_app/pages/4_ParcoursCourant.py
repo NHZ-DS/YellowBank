@@ -1,9 +1,9 @@
-"""Parcours 1 : Épargner & Budget — Yellow."""
+"""Parcours 1 : Épargner & Budget — Yello."""
 
 import streamlit as st
 from services.api_service import api_service
 
-st.set_page_config(page_title="Parcours 1 : Épargner & Budget — Yellow", page_icon="🛡️", layout="wide")
+st.set_page_config(page_title="Parcours 1 : Épargner & Budget — Yello", page_icon="🛡️", layout="wide")
 
 try:
     with open("static/css/style.css", "r", encoding="utf-8") as f:

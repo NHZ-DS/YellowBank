@@ -1,15 +1,15 @@
-"""Écran de Connexion et d'Inscription — Yellow."""
+"""Écran de Connexion et d'Inscription — Yello."""
 
 import streamlit as st
 from services.api_service import api_service
 
-st.set_page_config(page_title="Connexion — Yellow", page_icon="🔐", layout="centered")
+st.set_page_config(page_title="Connexion — Yello", page_icon="🔐", layout="centered")
 
 with open("static/css/style.css", "r", encoding="utf-8") as f:
     st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
 
-st.title("🔐 Accès à votre Espace Yellow")
-st.caption("Banque digitale YellowBank — Environnement sécurisé.")
+st.title("🔐 Accès à votre Espace Yello")
+st.caption("Banque digitale Yello — Environnement sécurisé.")
 
 tab_login, tab_register = st.tabs(["Connexion", "Créer un compte"])
 

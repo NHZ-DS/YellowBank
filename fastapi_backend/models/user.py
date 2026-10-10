@@ -27,7 +27,7 @@ class UserModel(Base):
     monthly_income = Column(Float, default=2400.00)
     monthly_expenses = Column(Float, default=650.00)
     
-    # Gamification & Parcours Yellow
+    # Gamification & Parcours Yello
     current_track = Column(String(30), default="courant")  # 'courant', 'pea', 'projets'
     xp_points = Column(Integer, default=50)
     level = Column(Integer, default=1)

@@ -6,11 +6,11 @@ from models.message import ActionSuggestion
 
 
 class ChitchatAgent:
-    """Gère l'accueil chaleureux, les félicitations et les questions sur le jeu Yellow."""
+    """Gère l'accueil chaleureux, les félicitations et les questions sur le jeu Yello."""
 
     def process(self, query: str, track: str = "courant") -> Dict[str, Any]:
         system_prompt = (
-            "Tu es le compagnon de bord virtuel sur l'île d'Yellow (YellowBank). "
+            "Tu es le compagnon de bord virtuel sur l'île d'Yello (Yello). "
             "Ton ton est dynamique, encourageant, moderne et bienveillant, parfaitement adapté à un jeune adulte. "
             "Tu expliques que l'application permet de naviguer à travers 3 grands parcours : "
             "1. Le Parcours Courant (gérer son argent au quotidien), "

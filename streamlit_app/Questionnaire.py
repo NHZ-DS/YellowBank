@@ -1,9 +1,9 @@
-"""Questionnaire d'Entrée & Calibrage du Parcours — Yellow."""
+"""Questionnaire d'Entrée & Calibrage du Parcours — Yello."""
 
 import streamlit as st
 from services.api_service import api_service
 
-st.set_page_config(page_title="Questionnaire d'Entrée — Yellow", page_icon="📋", layout="wide")
+st.set_page_config(page_title="Questionnaire d'Entrée — Yello", page_icon="📋", layout="wide")
 
 with open("static/css/style.css", "r", encoding="utf-8") as f:
     st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)

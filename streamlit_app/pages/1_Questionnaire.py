@@ -1,9 +1,9 @@
-"""Page de Questionnaire d'Orientation — Yellow."""
+"""Page de Questionnaire d'Orientation — Yello."""
 
 import streamlit as st
 from services.api_service import api_service
 
-st.set_page_config(page_title="1. Questionnaire — Yellow", page_icon="📋", layout="wide")
+st.set_page_config(page_title="1. Questionnaire — Yello", page_icon="📋", layout="wide")
 
 try:
     with open("static/css/style.css", "r", encoding="utf-8") as f:

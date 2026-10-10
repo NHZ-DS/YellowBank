@@ -23,7 +23,7 @@ class RAGAgent:
         context_text = "\n\n".join([f"Source: {res['document_title']}\n{res['full_text']}" for res in search_results])
 
         system_prompt = (
-            "Tu es le Conseiller Bancaire IA officiel d'Yellow (YellowBank). "
+            "Tu es le Conseiller Bancaire IA officiel d'Yello (Yello). "
             "RÈGLES IMPÉRATIVES DE SÉCURITÉ ET DÉONTOLOGIE :\n"
             "1. Réponds de façon précise, pédagogique et bienveillante en t'appuyant STRICTEMENT sur le contexte documentaire ci-dessous.\n"
             "2. 'L'agent conseille, le client décide' : Ne valide jamais d'opération à la place du client. Propose-lui la démarche à suivre.\n"

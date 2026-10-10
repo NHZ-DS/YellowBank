@@ -1,9 +1,9 @@
-"""Parcours 2 : PEA & Investissement (6 Niveaux) — Yellow."""
+"""Parcours 2 : PEA & Investissement (6 Niveaux) — Yello."""
 
 import streamlit as st
 from services.api_service import api_service
 
-st.set_page_config(page_title="Parcours 2 : Investir & PEA — Yellow", page_icon="📈", layout="wide")
+st.set_page_config(page_title="Parcours 2 : Investir & PEA — Yello", page_icon="📈", layout="wide")
 
 try:
     with open("static/css/style.css", "r", encoding="utf-8") as f:
@@ -29,7 +29,7 @@ t1, t2, t3, t4, t5, t6 = st.tabs([
     "🟣 Niv. 3 : Gestionnaire",
     "🟡 Niv. 4 : Virtuel 10k€",
     "🟠 Niv. 5 : Ouverture PEA",
-    "👑 Niv. 6 : Yellow Master"
+    "👑 Niv. 6 : Yello Master"
 ])
 
 with t1:

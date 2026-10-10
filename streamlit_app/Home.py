@@ -1,11 +1,11 @@
-"""Accueil de l'application Yellow (YellowBank) — Expérience Financière Ludique & Interactive."""
+"""Accueil de l'application Yello (Yello) — Expérience Financière Ludique & Interactive."""
 
 import streamlit as st
 from services.api_service import api_service
 
 # Configuration de la page
 st.set_page_config(
-    page_title="Yellow — Accueil Ludique",
+    page_title="Yello — Accueil Ludique",
     page_icon="🏦",
     layout="wide",
     initial_sidebar_state="expanded"
@@ -28,13 +28,13 @@ user = st.session_state["user"]
 # En-tête Hero
 st.markdown("""
 <div class="archipel-hero">
-    <div class="archipel-title">Bienvenue sur Yellow — Your Financial Adventure</div>
+    <div class="archipel-title">Bienvenue sur Yello — Your Financial Adventure</div>
     <div class="archipel-subtitle">La première application bancaire ludique qui transforme la gestion d'argent en un jeu de stratégie et d'apprentissage sans pression.</div>
 </div>
 """, unsafe_allow_html=True)
 
-st.markdown("### 🧭 Pourquoi choisir Yellow ?")
-st.write("Finis les formulaires administratifs austères ! Yellow vous accompagne de manière **ludique, visuelle et gratifiante** pour maîtriser votre budget et faire vos premiers pas en bourse.")
+st.markdown("### 🧭 Pourquoi choisir Yello ?")
+st.write("Finis les formulaires administratifs austères ! Yello vous accompagne de manière **ludique, visuelle et gratifiante** pour maîtriser votre budget et faire vos premiers pas en bourse.")
 
 c1, c2, c3 = st.columns(3)
 

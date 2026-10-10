@@ -1,14 +1,14 @@
-# 🎁 Guide des Aides, Avantages Bancaires & Bons Plans — YellowBank
+# 🎁 Guide des Aides, Avantages Bancaires & Bons Plans — Yello
 
 ## 1. Aides Financières et Avantages Bancaires (Focus Jeunes & Étudiants)
 
-YellowBank propose un ensemble d'aides financières et d'avantages préférentiels spécialement pensés pour les étudiants et jeunes actifs :
+Yello propose un ensemble d'aides financières et d'avantages préférentiels spécialement pensés pour les étudiants et jeunes actifs :
 
 | Avantage | Description |
 | :--- | :--- |
 | **Prime de bienvenue** | Somme offerte pour l'ouverture d'un compte bancaire, sous conditions (ex. 30 à 150 €). |
-| **Prime de parrainage** | Récompense financière attribuée lorsqu'un client recommande YellowBank à un proche. |
-| **Prime de mobilité bancaire** | Bonus offert pour transférer automatiquement ses prélèvements et opérations vers YellowBank. |
+| **Prime de parrainage** | Récompense financière attribuée lorsqu'un client recommande Yello à un proche. |
+| **Prime de mobilité bancaire** | Bonus offert pour transférer automatiquement ses prélèvements et opérations vers Yello. |
 | **Carte bancaire gratuite** | Suppression des frais de cotisation de carte (Visa / Mastercard), sous condition d'utilisation mensuelle. |
 | **Exonération des frais de tenue de compte** | Gratuité totale ou temporaire des frais de gestion de compte pour les jeunes. |
 | **Découvert autorisé préférentiel** | Conditions adaptées aux étudiants, sous réserve d'acceptation. |

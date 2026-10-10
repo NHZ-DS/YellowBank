@@ -25,7 +25,7 @@ else:
     load_dotenv()
 
 # Clés secrètes & JWT
-SECRET_KEY = os.getenv("JWT_SECRET_KEY", "yellowbank_secret_key_default_123456")
+SECRET_KEY = os.getenv("JWT_SECRET_KEY", "yello_secret_key_default_123456")
 ALGORITHM = os.getenv("JWT_ALGORITHM", "HS256")
 ACCESS_TOKEN_EXPIRE_MINUTES = int(os.getenv("ACCESS_TOKEN_EXPIRE_MINUTES", "60"))
 
@@ -52,7 +52,7 @@ MSSQL_TRUST_CERT = os.getenv("MSSQL_TRUST_SERVER_CERTIFICATE", "yes")
 Base = declarative_base()
 
 if DB_TYPE == "sqlite":
-    DB_PATH = BACKEND_DIR / "yellowbank.db"
+    DB_PATH = BACKEND_DIR / "yello.db"
     SQLALCHEMY_DATABASE_URL = f"sqlite:///{DB_PATH}"
     engine = create_engine(SQLALCHEMY_DATABASE_URL, connect_args={"check_same_thread": False})
     print(f"[SQLite] Base de donnees locale active : {DB_PATH.name}")
@@ -92,7 +92,7 @@ else:
         print("[MSSQL] Connexion a Microsoft SQL Server reussie.")
     except Exception as e:
         print(f"[SQL Server] Non accessible ({e}). Bascule automatique vers SQLite local.")
-        DB_PATH = BACKEND_DIR / "yellowbank.db"
+        DB_PATH = BACKEND_DIR / "yello.db"
         SQLALCHEMY_DATABASE_URL = f"sqlite:///{DB_PATH}"
         engine = create_engine(SQLALCHEMY_DATABASE_URL, connect_args={"check_same_thread": False})
 
@@ -113,7 +113,7 @@ def get_db():
 # -------------------------------------------------------------
 def hash_password(password: str) -> str:
     """Hache un mot de passe avec SHA-256 et un sel interne."""
-    salt = "archipel_yellowbank_salt_2026"
+    salt = "archipel_yello_salt_2026"
     return hashlib.sha256((password + salt).encode("utf-8")).hexdigest()
 
 
