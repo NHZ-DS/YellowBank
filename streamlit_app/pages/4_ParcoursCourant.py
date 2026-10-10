@@ -45,6 +45,7 @@ with tab_e1:
 
     if st.button("🏆 Valider l'Étape 1 & Obtenir le Badge", type="primary"):
         user["xp_points"] = user.get("xp_points", 120) + 60
+        user["budget_level"] = max(user.get("budget_level", 0), 1)
         st.session_state["user"] = user
         st.balloons()
         st.success("🎉 **Badge Débloqué : Matelas de Sécurité Testé !** (+60 XP attribués)")
@@ -62,6 +63,7 @@ with tab_e2:
     if st.button("Valider ma réponse au Quizz", type="primary"):
         if "épargne" in q1.lower():
             user["xp_points"] = user.get("xp_points", 120) + 50
+            user["budget_level"] = max(user.get("budget_level", 0), 2)
             st.session_state["user"] = user
             st.balloons()
             st.success("🎉 **Excellente réponse !** Badge Débloqué : 🧭 **Gestionnaire Prudent** (+50 XP)")

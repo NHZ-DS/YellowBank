@@ -64,6 +64,7 @@ st.divider()
 
 if st.button("🏆 Valider mon Bilan d'Aides & Obtenir le Badge", type="primary", use_container_width=True):
     user["xp_points"] = user.get("xp_points", 120) + 100
+    user["projets_level"] = max(user.get("projets_level", 0), 1)
     st.session_state["user"] = user
     st.balloons()
     st.success("🎉 **Badge Débloqué : Chasseur d'Aides !** (+100 XP attribués)")

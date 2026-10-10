@@ -1,0 +1,695 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plateau des parcours - Archipel</title>
+    <style>
+        :root {
+            /* Mode Clair (Plan d'architecte) */
+            --bg: #f5f4ef;
+            --surface: #ffffff;
+            --surface-rgb: 255, 255, 255;
+            --text: #2c3e50;
+            --text-muted: #7f8c8d;
+            --accent: #0f4c81;
+            /* Bleu profond */
+            --accent-hover: #1660a0;
+            --border: #dcd9d0;
+            --house-empty: #e0e0e0;
+            --house-filled: #0f4c81;
+            --grid-line: rgba(44, 62, 80, 0.05);
+            --success: #27ae60;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            :root {
+                /* Mode Sombre */
+                --bg: #1a1b1e;
+                --surface: #25262b;
+                --surface-rgb: 37, 38, 43;
+                --text: #e9ecef;
+                --text-muted: #909296;
+                --accent: #4dabf7;
+                --accent-hover: #339af0;
+                --border: #373a40;
+                --house-empty: #495057;
+                --house-filled: #4dabf7;
+                --grid-line: rgba(255, 255, 255, 0.03);
+                --success: #40c057;
+            }
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            line-height: 1.5;
+            padding: clamp(10px, 3vw, 30px);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            font-weight: 600;
+            margin-bottom: 8px;
+            font-size: clamp(1.5rem, 4vw, 2.2rem);
+        }
+
+        .header p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+
+        /* --- PLATEAU --- */
+        .board-container {
+            width: 100%;
+            max-width: 850px;
+            aspect-ratio: 1;
+            background-color: var(--surface);
+            background-image:
+                linear-gradient(var(--grid-line) 1px, transparent 1px),
+                linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
+            background-size: 20px 20px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 10px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            margin-bottom: 30px;
+        }
+
+        .board {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            grid-template-rows: repeat(5, 1fr);
+            gap: 8px;
+            width: 100%;
+            height: 100%;
+        }
+
+        .cell {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            padding: 6px;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            position: relative;
+            transition: transform 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.02);
+            user-select: none;
+        }
+
+        .cell:hover {
+            transform: translateY(-2px);
+            border-color: var(--accent);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08);
+        }
+
+        .cell.selected {
+            border: 2px solid var(--accent);
+            background: rgba(15, 76, 129, 0.02);
+        }
+
+        @media (prefers-color-scheme: dark) {
+            .cell.selected {
+                background: rgba(77, 171, 247, 0.05);
+            }
+        }
+
+        .cell-title {
+            font-size: clamp(0.55rem, 1.8vw, 0.9rem);
+            font-weight: 500;
+            line-height: 1.2;
+            word-break: break-word;
+        }
+
+        .houses {
+            display: flex;
+            gap: 3px;
+            margin-top: 6px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .house {
+            width: clamp(8px, 2vw, 12px);
+            height: clamp(8px, 2vw, 12px);
+            background: var(--house-empty);
+            /* Forme de maison avec clip-path */
+            clip-path: polygon(50% 0%, 100% 38%, 100% 100%, 0 100%, 0% 38%);
+            transition: background-color 0.3s;
+        }
+
+        .house.filled {
+            background: var(--house-filled);
+        }
+
+        .pawn {
+            position: absolute;
+            top: 4px;
+            left: 4px;
+            font-size: clamp(0.8rem, 2vw, 1.2rem);
+            line-height: 1;
+        }
+
+        /* --- DASHBOARD CENTRAL --- */
+        .dashboard {
+            grid-column: 2 / 5;
+            grid-row: 2 / 5;
+            background: rgba(var(--surface-rgb), 0.85);
+            backdrop-filter: blur(8px);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 20px;
+            box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.02);
+        }
+
+        .dash-subtitle {
+            color: var(--text-muted);
+            font-style: italic;
+            margin-bottom: 8px;
+            font-size: 1.1rem;
+        }
+
+        .dash-title {
+            font-size: 2rem;
+            font-weight: 600;
+            color: var(--accent);
+            margin-bottom: 20px;
+        }
+
+        .progress-container {
+            width: 80%;
+            height: 8px;
+            background: var(--house-empty);
+            border-radius: 4px;
+            overflow: hidden;
+            margin-bottom: 10px;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: var(--accent);
+            width: 0%;
+            transition: width 0.4s ease-out;
+        }
+
+        .dash-stats {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        /* --- PANNEAU DE DETAIL --- */
+        .detail-panel {
+            width: 100%;
+            max-width: 850px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 24px;
+            margin-bottom: 30px;
+        }
+
+        .detail-header {
+            margin-bottom: 16px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .detail-header h2 {
+            font-size: 1.6rem;
+            margin-bottom: 8px;
+        }
+
+        .step-list {
+            list-style: none;
+            margin-bottom: 24px;
+        }
+
+        .step-item {
+            display: flex;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .step-item:last-child {
+            border-bottom: none;
+        }
+
+        .step-icon {
+            margin-right: 12px;
+            font-size: 1.2rem;
+        }
+
+        .step-text {
+            flex-grow: 1;
+            font-size: 1rem;
+        }
+
+        .badge {
+            font-size: 0.8rem;
+            padding: 4px 10px;
+            border-radius: 12px;
+            background: var(--house-empty);
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+
+        .step-item.done .step-text {
+            font-weight: 500;
+        }
+
+        .step-item.done .badge {
+            background: var(--accent);
+            color: #fff;
+        }
+
+        .actions {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 1rem;
+            font-weight: 500;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background 0.2s, opacity 0.2s;
+            font-family: inherit;
+        }
+
+        button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .btn-primary {
+            background: var(--accent);
+            color: #fff;
+        }
+
+        .btn-primary:not(:disabled):hover {
+            background: var(--accent-hover);
+        }
+
+        .btn-secondary {
+            background: var(--surface);
+            color: var(--text);
+            border: 1px solid var(--border);
+        }
+
+        .btn-secondary:not(:disabled):hover {
+            background: var(--house-empty);
+        }
+
+        /* --- MODULE INVESTIR --- */
+        .invest-module {
+            margin-top: 24px;
+            padding-top: 24px;
+            border-top: 1px solid var(--border);
+        }
+
+        .sectors {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+        }
+
+        .sector-btn {
+            padding: 6px 12px;
+            font-size: 0.9rem;
+            border-radius: 20px;
+            border: 1px solid var(--border);
+            background: var(--surface);
+            color: var(--text);
+            cursor: pointer;
+        }
+
+        .sector-btn.active {
+            background: var(--accent);
+            color: #fff;
+            border-color: var(--accent);
+        }
+
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 16px;
+            margin-bottom: 20px;
+        }
+
+        .stock-card {
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            padding: 16px;
+        }
+
+        .stock-card h4 {
+            margin-bottom: 4px;
+        }
+
+        .stock-card p.desc {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-bottom: 12px;
+        }
+
+        .chart-container {
+            width: 100%;
+            height: 70px;
+            margin-bottom: 12px;
+        }
+
+        .perf-text {
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        .ambiance-text {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-bottom: 12px;
+        }
+
+        .disclaimer {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            text-align: center;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="header">
+        <h1>Ton plateau financier</h1>
+        <p>Chaque case est un parcours. Chaque maison bleue = une étape validée.</p>
+    </div>
+
+    <div class="board-container">
+        <div class="board" id="board">
+            <!-- Rempli par JS -->
+        </div>
+    </div>
+
+    <div class="detail-panel" id="detail">
+        <!-- Rempli par JS -->
+    </div>
+
+    <div class="disclaimer">
+        Information générale, pas un conseil en investissement.
+    </div>
+
+    <script>
+        // ---------- DONNEES ----------
+        const P = [
+            { name: "🧭 Profil de risque", color: "#95a5a6", desc: "Mini-questionnaire pour calibrer ton plateau.", steps: [["Questionnaire", "Profil défini"]] },
+            { name: "Budget", color: "#27ae60", desc: "Voir clair dans tes dépenses.", steps: [["Test de résistance", "Sécurité Testée"], ["Quizz budgétaire 50/30/20", "Gestionnaire Prudent"]] },
+            { name: "Épargner", color: "#16a085", desc: "Construire ton matelas, puis ton projet.", steps: [["Définir ta capacité", "Cap fixé"], ["Automatiser le virement", "Pilote auto"], ["1 mois d'avance", "Matelas 1 mois"], ["Optimiser le support", "Épargnant averti"], ["3 mois de dépenses", "Sécurité 3 mois"]] },
+            { name: "Fonds de sécurité", color: "#2980b9", desc: "Une structure qui résiste aux imprévus.", steps: [["Test d'imprévu simulé", "Choc absorbé"], ["1 mois", "Mois 1"], ["2 mois", "Mois 2"], ["3 mois", "Mois 3"], ["Test perte d'emploi", "Sécurité testée"]] },
+            { name: "📡 Radar marché", color: "#f39c12", desc: "Ton agent IA t'informe : stable, volatil ou turbulent. Il informe, il ne conseille pas.", steps: [["Choisir tes centres d'intérêt", "Intérêts définis"], ["Premier briefing", "Informé"]] },
+            { name: "Voiture", color: "#e67e22", desc: "Financer ton apport.", steps: [["Châssis : faire le point", "Vision claire"], ["Roues : fixer l'objectif", "Cap fixé"], ["Moteur : automatiser", "Pilote auto"], ["Carrosserie : 50 %", "Mi-parcours"], ["Livraison : 100 %", "Cap tenu"]] },
+            { name: "Appartement", color: "#8e44ad", desc: "Constituer ton apport.", steps: [["Estimer le coût total", "Projet chiffré"], ["Simuler un crédit", "Simulation faite"], ["Apport 25 %", "Fondations"], ["Apport 75 %", "Murs"], ["Comparer les offres", "Clés en main"]] },
+            { name: "Voyage", color: "#e84393", desc: "Un itinéraire qui se débloque.", steps: [["Destination et budget", "Cap fixé"], ["Cagnotte 33 %", "Billets"], ["Cagnotte 66 %", "Hébergement"], ["Cagnotte 100 %", "Départ"]] },
+            { name: "🛡️ Bouclier", color: "#f1c40f", desc: "Vérifie un site, un IBAN ou une plateforme avant d'agir.", steps: [["Première vérification", "Vigilant"], ["Mission Détective", "Enquêteur"]] },
+            { name: "Anti-arnaques", color: "#c0392b", desc: "Repère les signaux d'alerte.", steps: [["5 signaux d'alerte", "Œil exercé"], ["Vérifier un site / IBAN", "Contrôle fait"], ["Scénario Détective", "Enquêteur"], ["Sécuriser ses comptes", "Verrouillé"], ["Protéger un proche", "Gardien"]] },
+            { name: "Investir", color: "#2c3e50", desc: "Découvrez la bourse en 6 niveaux progressifs.", steps: [["L'Explorateur", "Niveau 1"], ["Le Stratège", "Niveau 2"], ["Le Gestionnaire", "Niveau 3"], ["Virtuel 10k€", "Niveau 4"], ["Ouverture PEA", "Niveau 5"], ["Yellow Master", "Niveau 6"]] },
+            { name: "Projets & Aides", color: "#00cec9", desc: "Financer une formation ou un permis.", steps: [["Valider mon bilan", "Bilan validé"]] },
+            { name: "🏁 Bilan", color: "#34495e", desc: "Un bilan sobre à la fin de chaque parcours.", steps: [["Bilan de parcours", "Parcours bouclé"]] },
+            { name: "Freelance", color: "#6c5ce7", desc: "Revenus irréguliers, impôts, cotisations.", steps: [["Provision impôts auto", "Provisionné"], ["Lisser ses revenus", "Lissé"], ["Trésorerie 3 mois", "Serein"]] },
+            { name: "Crédit responsable", color: "#d35400", desc: "Comprendre avant de s'engager.", steps: [["TAEG et assurance", "Lecture claire"], ["Simuler 3 scénarios", "Simulé"], ["Comparer les offres", "Comparé"]] },
+            { name: "Long terme", color: "#7f8c8d", desc: "Préparer l'avenir sans y penser tous les jours.", steps: [["Comprendre les enveloppes", "Enveloppes vues"], ["Premier versement programmé", "Lancé"], ["Revue annuelle", "Cap suivi"]] },
+        ];
+
+        const SEC = {
+            "🌱 Énergies renouvelables": [["Aeolis Énergie", "Parcs éoliens", "Grande", "France", "2,8 %", 11, .06, .05], ["Solvia Group", "Solaire et stockage", "Moyenne", "Espagne", "1,2 %", 23, .09, .11], ["Hydrane", "Hydroélectricité", "Grande", "Norvège", "3,4 %", 37, .04, .03]],
+            "💻 Technologie": [["Nexora Systems", "Logiciels cloud", "Grande", "Allemagne", "0,9 %", 41, .11, .07], ["Pixelium", "Semi-conducteurs", "Moyenne", "Pays-Bas", "1,5 %", 53, .13, .12], ["Datalis", "Cybersécurité", "Moyenne", "France", "0 %", 67, .10, .09]],
+            "⚕️ Santé": [["Vitalys Pharma", "Médicaments", "Grande", "Suisse", "3,1 %", 71, .05, .04], ["Medtrix", "Dispositifs médicaux", "Moyenne", "Irlande", "1,6 %", 83, .07, .06], ["Genova Bio", "Biotechnologies", "Petite", "Danemark", "0 %", 97, .08, .13]],
+            "🏢 Immobilier coté": [["Urbanis REIT", "Bureaux et logements", "Grande", "France", "5,2 %", 101, .02, .05], ["Logistica Prime", "Entrepôts", "Moyenne", "Belgique", "4,4 %", 113, .04, .06]],
+            "🛍️ Consommation": [["Maison Corvin", "Biens durables", "Grande", "France", "2,5 %", 127, .04, .04], ["Fresco Retail", "Distribution alimentaire", "Grande", "Espagne", "3,6 %", 131, .03, .03], ["Velo & Co", "Mobilité et sport", "Moyenne", "Italie", "1,8 %", 149, .07, .08]],
+        };
+
+        const CORNERS = [0, 4, 8, 12];
+        const GRID_POS = [
+            [1, 1], [1, 2], [1, 3], [1, 4], [1, 5], // 0 à 4
+            [2, 5], [3, 5], [4, 5], [5, 5],        // 5 à 8
+            [5, 4], [5, 3], [5, 2], [5, 1],        // 9 à 12
+            [4, 1], [3, 1], [2, 1]                // 13 à 15
+        ];
+
+        // ---------- ETAT ----------
+        let state = {
+            sel: 1, // Case sélectionnée
+            active: null, // Parcours actif
+            done: Array(16).fill(0), // Etapes validées
+            sec: null // Secteur sélectionné (pour Investir)
+        };
+
+        // ---------- UTILITAIRES ----------
+        function ambiance(vol) {
+            return vol < .06 ? "🟢 Plutôt stable" : vol < .10 ? "🟠 Volatil" : "🔴 Forte turbulence";
+        }
+
+        function pseudoRandom(seed) {
+            let t = seed += 0x6D2B79F5;
+            return function () {
+                t = Math.imul(t ^ t >>> 15, t | 1);
+                t ^= t + Math.imul(t ^ t >>> 7, t | 61);
+                return ((t ^ t >>> 14) >>> 0) / 4294967296;
+            }
+        }
+
+        function generateSeries(c, length = 24) {
+            let rng = pseudoRandom(c[5]);
+            let x = 100.0, out = [];
+            for (let i = 0; i < 120; i++) {
+                x *= 1 + c[6] / 120 + (rng() - 0.5) * c[7];
+                out.push(x);
+            }
+            return out.slice(120 - length);
+        }
+
+        function renderSvgChart(data) {
+            let min = Math.min(...data);
+            let max = Math.max(...data);
+            let range = max - min || 1;
+            let pts = data.map((v, i) => `${(i / (data.length - 1)) * 100},${100 - ((v - min) / range) * 100}`).join(" ");
+            return `<svg viewBox="0 -5 100 110" preserveAspectRatio="none" style="width:100%; height:100%; stroke:var(--accent); stroke-width:2; fill:none; stroke-linecap:round; stroke-linejoin:round;"><polyline points="${pts}" /></svg>`;
+        }
+
+        // ---------- RENDU ----------
+        const boardEl = document.getElementById('board');
+        const detailEl = document.getElementById('detail');
+
+        function renderBoard() {
+            boardEl.innerHTML = '';
+
+            // Les 16 cases du pourtour
+            P.forEach((p, i) => {
+                const pos = GRID_POS[i];
+                const isCorner = CORNERS.includes(i);
+
+                let html = `<div style="height: 6px; background-color: ${p.color}; position: absolute; top: 0; left: 0; right: 0;"></div>
+                            <div class="cell-title" style="margin-top: 4px;">${p.name}</div>`;
+
+                if (!isCorner) {
+                    const total = p.steps.length;
+                    const done = state.done[i];
+                    let housesHtml = '<div class="houses">';
+                    for (let k = 0; k < total; k++) {
+                        housesHtml += `<div class="house ${k < done ? 'filled' : ''}"></div>`;
+                    }
+                    housesHtml += '</div>';
+                    html += housesHtml;
+                }
+
+                if (state.active === i) {
+                    html += `<div class="pawn">📍</div>`;
+                }
+
+                const cell = document.createElement('div');
+                cell.className = `cell ${state.sel === i ? 'selected' : ''}`;
+                cell.style.gridRow = pos[0];
+                cell.style.gridColumn = pos[1];
+                cell.innerHTML = html;
+                cell.onclick = () => {
+                    state.sel = i;
+                    if (P[i].name !== "Investir") state.sec = null;
+                    render();
+                };
+
+                boardEl.appendChild(cell);
+            });
+
+            // Tableau de bord central
+            const dash = document.createElement('div');
+            dash.className = 'dashboard';
+
+            if (state.active === null) {
+                dash.innerHTML = `<div class="dash-subtitle">Choisis ton premier parcours</div>`;
+            } else {
+                const a = state.active;
+                const p = P[a];
+                const done = state.done[a];
+                const total = p.steps.length;
+                const pct = (done / total) * 100;
+
+                dash.innerHTML = `
+                    <div class="dash-subtitle">Parcours actif</div>
+                    <div class="dash-title">${p.name}</div>
+                    <div class="progress-container">
+                        <div class="progress-bar" style="width: ${pct}%"></div>
+                    </div>
+                    <div class="dash-stats">${done}/${total} étapes · ${done} badge(s)</div>
+                `;
+            }
+            boardEl.appendChild(dash);
+        }
+
+        function renderDetail() {
+            const i = state.sel;
+            const p = P[i];
+
+            let html = `
+                <div class="detail-header">
+                    <h2>${p.name}</h2>
+                    <p style="color: var(--text-muted);">${p.desc}</p>
+                </div>
+                <ul class="step-list">
+            `;
+
+            p.steps.forEach((step, k) => {
+                const isDone = k < state.done[i];
+                html += `
+                    <li class="step-item ${isDone ? 'done' : ''}">
+                        <div class="step-icon">${isDone ? '✅' : '⬜'}</div>
+                        <div class="step-text">${step[0]}</div>
+                        <div class="badge">${step[1]}</div>
+                    </li>
+                `;
+            });
+            html += `</ul><div class="actions">`;
+
+            const isActive = state.active === i;
+            const allDone = state.done[i] >= p.steps.length;
+
+            html += `<button class="btn-primary" id="btn-start" ${isActive ? 'disabled' : ''}>${isActive ? 'Parcours actif' : 'Commencer ce parcours'}</button>`;
+            html += `<button class="btn-secondary" id="btn-step" ${!isActive || allDone ? 'disabled' : ''}>Valider l'étape suivante (démo)</button>`;
+            html += `</div>`;
+
+            // Module spécifique "Investir"
+            if (p.name === "Investir") {
+                html += `<div class="invest-module">
+                    <h3 style="margin-bottom: 12px;">Quels secteurs t'intéressent ?</h3>
+                    <div class="sectors">`;
+
+                Object.keys(SEC).forEach(sec => {
+                    html += `<button class="sector-btn ${state.sec === sec ? 'active' : ''}" onclick="selectSector('${sec}')">${sec}</button>`;
+                });
+
+                html += `</div>`;
+
+                if (state.sec && SEC[state.sec]) {
+                    html += `<p style="color:var(--text-muted); font-size:0.9rem; margin-bottom:16px;">Entreprises du secteur « ${state.sec} » (données fictives)</p>`;
+                    html += `<div class="cards-grid">`;
+
+                    SEC[state.sec].forEach(c => {
+                        const s = generateSeries(c, 24);
+                        const perf = ((s[s.length - 1] / s[0]) - 1) * 100;
+                        const svg = renderSvgChart(s);
+
+                        html += `
+                            <div class="stock-card">
+                                <h4>${c[0]}</h4>
+                                <p class="desc">${c[1]}</p>
+                                <div class="chart-container">${svg}</div>
+                                <div class="perf-text" style="color: ${perf >= 0 ? 'var(--success)' : 'inherit'}">${perf > 0 ? '+' : ''}${perf.toFixed(1)} % sur 1 an</div>
+                                <div class="ambiance-text">${ambiance(c[7])}</div>
+                            </div>
+                        `;
+                    });
+
+                    html += `</div>`;
+                }
+                html += `</div>`;
+            }
+
+            detailEl.innerHTML = html;
+
+            // Events
+            document.getElementById('btn-start').onclick = () => {
+                state.active = i;
+                render();
+                
+                let targetBtn = null;
+                if (P[i].name === "Investir") targetBtn = "HIDDEN_GO_PEA";
+                else if (P[i].name === "Budget") targetBtn = "HIDDEN_GO_BUDGET";
+                else if (P[i].name === "Projets & Aides") targetBtn = "HIDDEN_GO_PROJETS";
+                
+                if (targetBtn) {
+                    try {
+                        const btns = window.parent.document.querySelectorAll('button');
+                        for (let b of btns) {
+                            if (b.innerText.includes(targetBtn)) {
+                                b.click();
+                            }
+                        }
+                    } catch (e) {
+                        console.error("Erreur de navigation vers Streamlit", e);
+                    }
+                }
+            };
+            document.getElementById('btn-step').onclick = () => {
+                if (state.done[i] < p.steps.length) {
+                    state.done[i]++;
+                    render();
+                }
+            };
+        }
+
+        window.selectSector = (sec) => {
+            state.sec = sec;
+            render();
+        };
+
+        function render() {
+            renderBoard();
+            renderDetail();
+        }
+
+        // Init
+        render();
+
+    </script>
+</body>
+
+</html>

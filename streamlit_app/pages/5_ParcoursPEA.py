@@ -38,6 +38,7 @@ with t1:
     st.info("🎖️ **Badge à débloquer :** `Premiers pas en Bourse`")
     if st.button("🎮 Valider le Niveau 1", key="btn_n1", type="primary"):
         user["xp_points"] = user.get("xp_points", 120) + 50
+        user["pea_level"] = max(user.get("pea_level", 0), 1)
         st.session_state["user"] = user
         st.balloons()
         st.success("🎉 **Badge Débloqué : Premiers pas en Bourse !** (+50 XP)")
@@ -48,6 +49,7 @@ with t2:
     st.write("• Qu'est-ce qu'un PEA ?\n• Pourquoi son cadre fiscal est-il intéressant à long terme ?\n• Action vs ETF & Diversification.")
     if st.button("🎮 Valider le Niveau 2", key="btn_n2", type="primary"):
         user["xp_points"] = user.get("xp_points", 120) + 60
+        user["pea_level"] = max(user.get("pea_level", 0), 2)
         st.session_state["user"] = user
         st.balloons()
         st.success("🎉 **Badge Débloqué : Investisseur Éclairé !** (+60 XP)")
@@ -58,6 +60,7 @@ with t3:
     st.write("Conformément aux préconisations AMF, préserver son épargne de sécurité est récompensé au même titre que l'investissement.")
     if st.button("🎮 Valider le Niveau 3", key="btn_n3", type="primary"):
         user["xp_points"] = user.get("xp_points", 120) + 60
+        user["pea_level"] = max(user.get("pea_level", 0), 3)
         st.session_state["user"] = user
         st.balloons()
         st.success("🎉 **Badge Débloqué : Investisseur Éclairé !** (+60 XP)")
@@ -71,6 +74,7 @@ with t4:
 
     if st.button("🎮 Valider le Niveau 4", key="btn_n4", type="primary"):
         user["xp_points"] = user.get("xp_points", 120) + 100
+        user["pea_level"] = max(user.get("pea_level", 0), 4)
         st.session_state["user"] = user
         st.balloons()
         st.success("🎉 **Badge Débloqué : Sang-froid Financier !** (+100 XP)")
@@ -81,6 +85,7 @@ with t5:
     st.caption("Plafond classique : 150 000 € | Plafond PEA Jeune : 20 000 €.")
     if st.button("🎮 Valider le Niveau 5", key="btn_n5", type="primary"):
         user["xp_points"] = user.get("xp_points", 120) + 80
+        user["pea_level"] = max(user.get("pea_level", 0), 5)
         st.session_state["user"] = user
         st.balloons()
         st.success("🎉 **Badge Débloqué : Mon premier PEA !** (+80 XP)")
@@ -90,6 +95,7 @@ with t6:
     st.write("**Objectif :** Bilans récurrents, maintien de l'épargne de sécurité et autonomie dans la durée.")
     if st.button("👑 Débloquer le Badge Ultime", key="btn_n6", type="primary"):
         user["xp_points"] = user.get("xp_points", 120) + 150
+        user["pea_level"] = max(user.get("pea_level", 0), 6)
         st.session_state["user"] = user
         st.balloons()
         st.success("👑 **BADGE ULTIME DÉBLOQUÉ : YELLOW MASTER !** (+150 XP)")
