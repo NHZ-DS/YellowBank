@@ -1,1 +1,93 @@
+/* Charte graphique sobre, adulte et moderne pour Archipel (YellowBank) */
 
+:root {
+    --primary: #E5A910;
+    --primary-hover: #D4980B;
+    --bg-dark: #0F172A;
+    --card-bg: #1E293B;
+    --card-border: rgba(229, 169, 16, 0.25);
+    --text-main: #F8FAFC;
+    --text-muted: #94A3B8;
+    --success: #10B981;
+    --warning: #F59E0B;
+    --danger: #EF4444;
+}
+
+/* En-tête Hero */
+.archipel-hero {
+    background: linear-gradient(135deg, #1E293B 0%, #0F172A 100%);
+    border: 1px solid var(--card-border);
+    border-radius: 12px;
+    padding: 24px;
+    margin-bottom: 24px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+}
+
+.archipel-title {
+    color: var(--primary);
+    font-size: 26px;
+    font-weight: 700;
+    margin-bottom: 6px;
+}
+
+.archipel-subtitle {
+    color: var(--text-muted);
+    font-size: 15px;
+    margin-bottom: 0px;
+}
+
+/* Cartes sobres (Jalons & Missions) */
+.mission-card {
+    background-color: var(--card-bg);
+    border-left: 4px solid var(--primary);
+    border-radius: 8px;
+    padding: 16px;
+    margin-bottom: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.mission-completed {
+    border-left-color: var(--success);
+    opacity: 0.85;
+}
+
+.badge-pill {
+    display: inline-block;
+    background-color: rgba(229, 169, 16, 0.15);
+    color: var(--primary);
+    border: 1px solid var(--primary);
+    border-radius: 20px;
+    padding: 4px 12px;
+    font-size: 13px;
+    font-weight: 600;
+    margin: 4px;
+}
+
+/* Boîte d'information Marché */
+.market-box {
+    background: #182234;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    padding: 18px;
+    margin-top: 15px;
+}
+
+.ambiance-stable {
+    color: #10B981;
+    font-weight: bold;
+}
+
+.ambiance-volatil {
+    color: #F59E0B;
+    font-weight: bold;
+}
+
+/* Avertissement réglementaire MiFID II */
+.legal-disclaimer {
+    font-size: 11px;
+    color: #94A3B8;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    padding-top: 8px;
+    margin-top: 14px;
+    font-style: italic;
+}

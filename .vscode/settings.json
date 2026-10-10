@@ -1,0 +1,11 @@
+{
+    "python.defaultInterpreterPath": "C:\\Users\\noerrami\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+    "python.analysis.extraPaths": [
+        "./fastapi_backend",
+        "./streamlit_app"
+    ],
+    "python.autoComplete.extraPaths": [
+        "./fastapi_backend",
+        "./streamlit_app"
+    ]
+}
