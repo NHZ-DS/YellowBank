@@ -48,7 +48,7 @@ class OnboardingService:
                 user_id=user_id,
                 badge_name="Bienvenue à bord",
                 badge_icon="🏝️",
-                description="A complété son questionnaire d'entrée et rejoint l'île d'Archipel."
+                description="A complété son questionnaire d'entrée et rejoint l'île d'Yellow."
             )
             db.add(welcome_badge)
 

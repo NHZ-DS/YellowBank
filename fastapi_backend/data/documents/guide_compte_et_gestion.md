@@ -24,7 +24,7 @@ YellowBank propose des cartes internationales Visa / Mastercard avec technologie
 - **Découvert non autorisé :** En cas de dépassement, le taux majoré légal s'applique (14,90 %) avec commission d'intervention de 8,00 € par opération rejetée (plafonnée à 80 €/mois).
 
 ## 5. Paramétrage des Alertes de Solde
-L'application Archipel permet de définir des alertes intelligentes pour garder le contrôle de son budget :
+L'application Yellow permet de définir des alertes intelligentes pour garder le contrôle de son budget :
 - **Alerte solde bas :** Notification push ou SMS immédiate dès que le solde disponible passe en dessous d'un seuil personnalisé (ex: 50 € ou 100 €).
 - **Alerte dépense majeure :** Alerte envoyée pour tout débit unitaire supérieur à 150 €.
 - **Catégorisation automatique :** Les transactions sont triées par postes de dépenses (Alimentation, Logement, Transports, Loisirs, Abonnements).

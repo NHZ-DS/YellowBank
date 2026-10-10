@@ -1,11 +1,11 @@
-"""Page de Sélection de Parcours — Archipel."""
+"""Page de Sélection de Parcours — Yellow."""
 
 import streamlit as st
 import streamlit.components.v1 as components
 import os
 from services.api_service import api_service
 
-st.set_page_config(page_title="3. Le Plateau — Archipel", page_icon=":material/explore:", layout="wide")
+st.set_page_config(page_title="3. Le Plateau — Yellow", page_icon="🧭", layout="wide")
 
 try:
     with open("static/css/style.css", "r", encoding="utf-8") as f:
@@ -17,7 +17,7 @@ if "user" not in st.session_state or not st.session_state["user"]:
     login_res = api_service.login("demo", "demo123")
     st.session_state["user"] = login_res.get("user", {})
 
-st.title(":material/explore: Le Plateau d'Évolution")
+st.title("🧭 Le Plateau d'Évolution")
 st.write("Retrouvez l'intégralité de vos parcours financiers sur le plateau interactif ci-dessous.")
 
 # Boutons invisibles pour la navigation depuis le Javascript

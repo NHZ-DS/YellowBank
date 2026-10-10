@@ -1,9 +1,9 @@
-"""Interface de Discussion avec le Conseiller IA Augmenté (RAG & FAQ)."""
+"""Interface de Discussion avec le Marcel Augmenté (RAG & FAQ)."""
 
 import streamlit as st
 from services.api_service import api_service
 
-st.set_page_config(page_title="Conseiller IA — Archipel", page_icon="💬", layout="wide")
+st.set_page_config(page_title="Marcel — Yellow", page_icon="💬", layout="wide")
 
 with open("static/css/style.css", "r", encoding="utf-8") as f:
     st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
@@ -19,7 +19,7 @@ if "chat_messages" not in st.session_state:
     st.session_state["chat_messages"] = [
         {
             "role": "assistant",
-            "content": "Bonjour ! Je suis votre conseiller d'information financière Archipel. Je réponds à vos questions en m'appuyant strictement sur nos guides officiels et les règles bancaires. N'hésitez pas à me solliciter.",
+            "content": "Bonjour ! Je suis votre Marcel, votre assistant financier intelligent. Je réponds à vos questions en m'appuyant strictement sur nos guides officiels et les règles bancaires. N'hésitez pas à me solliciter.",
             "confidence": 1.0,
             "sources": [],
             "actions": []

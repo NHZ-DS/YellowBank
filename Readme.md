@@ -1,4 +1,4 @@
-# 🏝️ Archipel (YellowBank) — Compagnon Financier Intelligent & Gamifié
+# 🏝️ Yellow (YellowBank) — Compagnon Financier Intelligent & Gamifié
 
 Application bancaire et d'investissement nouvelle génération combinant une interface mobile **Streamlit**, un backend asynchrone **FastAPI**, un système **Multi-Agents IA (RAG, FAQ, Chitchat)** et un moteur de **Gamification** (missions, badges, 3 parcours d'accompagnement).
 
@@ -9,7 +9,7 @@ Application bancaire et d'investissement nouvelle génération combinant une int
 Consultez le document complet d'architecture avec schéma visuel et description détaillée de chaque fichier :  
 👉 **[Lire la documentation complète : ARCHITECTURE.md](ARCHITECTURE.md)**
 
-![Architecture Globale Archipel](docs/architecture.png)
+![Architecture Globale Yellow](docs/architecture.png)
 
 ---
 

@@ -1,12 +1,12 @@
-# 🏝️ Architecture Technique & Fonctionnelle — Projet Archipel (YellowBank)
+# 🏝️ Architecture Technique & Fonctionnelle — Projet Yellow (YellowBank)
 
-Bienvenue dans la documentation d'architecture de l'application **Archipel**, le compagnon financier intelligent et gamifié conçu pour démystifier la banque et l'investissement auprès des jeunes adultes.
+Bienvenue dans la documentation d'architecture de l'application **Yellow**, le compagnon financier intelligent et gamifié conçu pour démystifier la banque et l'investissement auprès des jeunes adultes.
 
 ---
 
 ## 1. Schéma Global de l'Architecture
 
-![Architecture Globale Archipel](docs/architecture.png)
+![Architecture Globale Yellow](docs/architecture.png)
 
 ### Diagramme de flux et interactions (Mermaid)
 
@@ -16,7 +16,7 @@ flowchart TD
         A[Login.py\nConnexion & Inscription] --> B[Home.py\nAccueil & Univers Banque]
         B --> C[Questionnaire.py\nOnboarding & Profil financier]
         C --> D[Dashboard.py\nProgression, XP & Badges]
-        D --> E[Chat.py\nConseiller IA Augmenté]
+        D --> E[Chat.py\nMarcel Augmenté]
         D --> F[Profile.py\nDonnées & Opt-in RGPD]
         API_SVC[services/api_service.py\nClient HTTP / Async]
     end
@@ -97,7 +97,7 @@ Plutôt que d'envoyer l'ensemble des requêtes brutes à un grand modèle de lan
 2. **L'Agent FAQ (`faq_agent.py`) :**  
    - Traite les questions récurrentes sans appel coûteux à un LLM externe (ex: "Comment faire opposition à ma carte ?"). Réponse instantanée et coût de token nul.
 3. **L'Agent Chitchat (`chitchat_agent.py`) :**  
-   - Assure l'accueil, les encouragements lors des missions et le dialogue amical dans l'univers de l'île "Archipel", en s'appuyant sur l'API d'OpenAI.
+   - Assure l'accueil, les encouragements lors des missions et le dialogue amical dans l'univers de l'île "Yellow", en s'appuyant sur l'API d'OpenAI.
 
 ### D. Sécurité, Rôle de l'IA & Respect du RGPD
 1. **"L'agent conseille, le client décide" :** Conformément aux règles de déontologie financière, l'agent ne réalise **jamais** d'action engageante à la place de l'utilisateur. Il propose des options claires, et l'utilisateur valide manuellement chaque étape.
@@ -112,15 +112,15 @@ Plutôt que d'envoyer l'ensemble des requêtes brutes à un grand modèle de lan
 
 | Fichier / Dossier | Rôle et Responsabilité |
 | :--- | :--- |
-| [Home.py](file:///c:/Users/noerrami/Documents/YellowBank/streamlit_app/Home.py) | **Page d'accueil principale :** Présente l'univers immersif d'Archipel, accueille l'utilisateur avec un message personnalisé et propose le bouton d'action *"Commencer"* vers le questionnaire d'entrée. |
+| [Home.py](file:///c:/Users/noerrami/Documents/YellowBank/streamlit_app/Home.py) | **Page d'accueil principale :** Présente l'univers immersif d'Yellow, accueille l'utilisateur avec un message personnalisé et propose le bouton d'action *"Commencer"* vers le questionnaire d'entrée. |
 | [Login.py](file:///c:/Users/noerrami/Documents/YellowBank/streamlit_app/Login.py) | **Écran d'authentification & inscription :** Formulaires sécurisés de connexion et création de compte client avec visuel d'ambiance bancaire. |
 | [Questionnaire.py](file:///c:/Users/noerrami/Documents/YellowBank/streamlit_app/Questionnaire.py) | **Questionnaire d'onboarding :** Recueille en 4 étapes le profil (âge, statut pro), les objectifs (gestion courante, investissement, projet) et la maturité financière pour recommander l'un des 3 parcours types. |
 | [Chat.py](file:///c:/Users/noerrami/Documents/YellowBank/streamlit_app/Chat.py) | **Interface du Conseiller Conversationnel :** Chat interactif affichant les messages, les sources documentaires, le **badge du score de confiance RAG** et des boutons d'actions suggérées. |
 | [Dashboard.py](file:///c:/Users/noerrami/Documents/YellowBank/streamlit_app/Dashboard.py) | **Tableau de bord de suivi & Gamification :** Affiche la progression dans le parcours en cours, les missions actives, les badges débloqués, l'XP accumulée et les challenges ludiques. |
 | [Profile.py](file:///c:/Users/noerrami/Documents/YellowBank/streamlit_app/Profile.py) | **Espace personnel & Conformité RGPD :** Consultation des coordonnées, état civil, soldes bancaires, réglage d'autorisation de partage des données avec le conseiller bancaire humain. |
-| [static/css/style.css](file:///c:/Users/noerrami/Documents/YellowBank/streamlit_app/static/css/style.css) | **Feuille de style CSS :** Charte graphique inspirée d'Archipel/YellowBank (or ambré, bleu nuit, cartes en relief, badges dorés, responsive mobile). |
+| [static/css/style.css](file:///c:/Users/noerrami/Documents/YellowBank/streamlit_app/static/css/style.css) | **Feuille de style CSS :** Charte graphique inspirée d'Yellow/YellowBank (or ambré, bleu nuit, cartes en relief, badges dorés, responsive mobile). |
 | [static/js/script.js](file:///c:/Users/noerrami/Documents/YellowBank/streamlit_app/static/js/script.js) | **Scripts JavaScript légers :** Micro-interactions côté client, gestion du défilement fluide du chat et animations. |
-| [static/img/logo.png](file:///c:/Users/noerrami/Documents/YellowBank/streamlit_app/static/img/logo.png) | **Identité visuelle :** Logo officiel d'Archipel. |
+| [static/img/logo.png](file:///c:/Users/noerrami/Documents/YellowBank/streamlit_app/static/img/logo.png) | **Identité visuelle :** Logo officiel d'Yellow. |
 | [static/img/badges/](file:///c:/Users/noerrami/Documents/YellowBank/streamlit_app/static/img/badges) | **Assets de gamification :** Icônes des badges à débloquer (*Premier Pas*, *Épargnant Sage*, *Explorateur PEA*, *Chasseur d'Aides*...). |
 | [services/api_service.py](file:///c:/Users/noerrami/Documents/YellowBank/streamlit_app/services/api_service.py) | **Client API HTTP :** Encapsule tous les appels `httpx`/`requests` vers les routes FastAPI (authentification, envoi de message, validation de mission, scoring). |
 
@@ -186,7 +186,7 @@ Plutôt que d'envoyer l'ensemble des requêtes brutes à un grand modèle de lan
 
 ## 4. Les 3 Parcours Types dans l'Application
 
-Conformément à la vision d'Archipel, chaque utilisateur est dirigé vers l'un des 3 parcours suivants suite à son questionnaire d'entrée :
+Conformément à la vision d'Yellow, chaque utilisateur est dirigé vers l'un des 3 parcours suivants suite à son questionnaire d'entrée :
 
 ```
 ┌────────────────────────────────────────────────────────────────────────┐
@@ -229,4 +229,4 @@ streamlit run Home.py
 *Application accessible sur : `http://localhost:8501`*
 
 ---
-*Document créé pour le projet Archipel / YellowBank — Tous droits réservés.*
+*Document créé pour le projet Yellow / YellowBank — Tous droits réservés.*

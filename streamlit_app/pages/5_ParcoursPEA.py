@@ -1,9 +1,9 @@
-"""Parcours 2 : PEA & Investissement (6 Niveaux) — Archipel."""
+"""Parcours 2 : PEA & Investissement (6 Niveaux) — Yellow."""
 
 import streamlit as st
 from services.api_service import api_service
 
-st.set_page_config(page_title="Parcours 2 : Investir & PEA — Archipel", page_icon="📈", layout="wide")
+st.set_page_config(page_title="Parcours 2 : Investir & PEA — Yellow", page_icon="📈", layout="wide")
 
 try:
     with open("static/css/style.css", "r", encoding="utf-8") as f:

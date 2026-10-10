@@ -1,4 +1,4 @@
-"""Point d'entrée principal de l'application FastAPI Archipel (YellowBank)."""
+"""Point d'entrée principal de l'application FastAPI Yellow (YellowBank)."""
 
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
@@ -11,7 +11,7 @@ from services.gamification_service import gamification_service_instance
 
 # Initialisation de l'application FastAPI
 app = FastAPI(
-    title="🏝️ Archipel — API Bancaire & IA Conversationnelle",
+    title="🏝️ Yellow — API Bancaire & IA Conversationnelle",
     description="Backend microservices pour YellowBank combinant SQL Server, Multi-agents RAG et Gamification.",
     version="1.0.0"
 )
@@ -36,7 +36,7 @@ app.include_router(profile_router.router)
 @app.on_event("startup")
 def on_startup():
     """Initialise les tables dans SQL Server et insère les données de démarrage si nécessaire."""
-    print("[Startup] Demarrage de l'API Archipel...")
+    print("[Startup] Demarrage de l'API Yellow...")
     try:
         # Création automatique des tables
         Base.metadata.create_all(bind=engine)
@@ -72,8 +72,8 @@ def on_startup():
                 b = UserBadgeModel(
                     user_id=demo_user.id,
                     badge_name="Bienvenue a bord",
-                    badge_icon="[Archipel]",
-                    description="A rejoint l'aventure Archipel."
+                    badge_icon="[Yellow]",
+                    description="A rejoint l'aventure Yellow."
                 )
                 db.add(b)
                 db.commit()
@@ -88,7 +88,7 @@ def on_startup():
 def root():
     """Vérification de l'état de santé du backend."""
     return {
-        "app": "Archipel API (YellowBank)",
+        "app": "Yellow API (YellowBank)",
         "status": "healthy",
         "version": "1.0.0",
         "docs_url": "/docs"

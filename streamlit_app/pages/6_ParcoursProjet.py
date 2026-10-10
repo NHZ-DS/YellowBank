@@ -1,9 +1,9 @@
-"""Parcours 3 : Projets & Aides — Archipel."""
+"""Parcours 3 : Projets & Aides — Yellow."""
 
 import streamlit as st
 from services.api_service import api_service
 
-st.set_page_config(page_title="Parcours 3 : Projets & Aides — Archipel", page_icon="🎓", layout="wide")
+st.set_page_config(page_title="Parcours 3 : Projets & Aides — Yellow", page_icon="🎓", layout="wide")
 
 try:
     with open("static/css/style.css", "r", encoding="utf-8") as f:
@@ -29,7 +29,7 @@ c1, c2 = st.columns(2)
 with c1:
     st.markdown("""
     <div class="mission-card">
-        <h4>🎓 Prêt Étudiant Garanti par l'État</h4>
+        <h4 style="color: white;">🎓 Prêt Étudiant Garanti par l'État</h4>
         <p style="font-size:13px; color:#94A3B8;">Empruntez sans caution personnelle ni garant familial via la garantie d'État.</p>
         <span class="badge-pill">Taux préférentiel</span>
     </div>
@@ -37,7 +37,7 @@ with c1:
 
     st.markdown("""
     <div class="mission-card">
-        <h4>🚗 Prêt Permis de Conduire (1 € / jour)</h4>
+        <h4 style="color: white;">🚗 Prêt Permis de Conduire (1 € / jour)</h4>
         <p style="font-size:13px; color:#94A3B8;">Financez votre permis B avec prise en charge des intérêts par l'État.</p>
         <span class="badge-pill">0 % intérêt</span>
     </div>
@@ -46,7 +46,7 @@ with c1:
 with c2:
     st.markdown("""
     <div class="mission-card">
-        <h4>🎁 Prime de Bienvenue & Mobilité</h4>
+        <h4 style="color: white;">🎁 Prime de Bienvenue & Mobilité</h4>
         <p style="font-size:13px; color:#94A3B8;">Jusqu'à 150 € offerts pour la première ouverture et le transfert automatique.</p>
         <span class="badge-pill">Prime cash</span>
     </div>
@@ -54,7 +54,7 @@ with c2:
 
     st.markdown("""
     <div class="mission-card">
-        <h4>✈️ Frais Réduits à l'Étranger</h4>
+        <h4 style="color: white;">✈️ Frais Réduits à l'Étranger</h4>
         <p style="font-size:13px; color:#94A3B8;">Paiements et retraits sans commission de change lors de vos stages et séjours.</p>
         <span class="badge-pill">0 € commission</span>
     </div>

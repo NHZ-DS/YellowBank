@@ -6,8 +6,8 @@ La sécurité de votre compte est assurée par des protocoles bancaires certifi�
 - **Règle d'or contre le Phishing (Hameçonnage) :** Jamais aucun conseiller, technicien ou collaborateur de YellowBank ne vous demandera votre mot de passe, votre code confidentiel à 4 chiffres, ou un code de confirmation reçu par SMS.
 - **Blocage des transactions suspectes :** Algorithmes de détection d'anomalies en temps réel alertant immédiatement l'utilisateur sur son mobile en cas d'activité inhabituelle.
 
-## 2. Déontologie et Rôle de l'Agent IA Archipel
-L'agent conversationnel d'Archipel applique une charte d'éthique stricte :
+## 2. Déontologie et Rôle de l'Agent IA Yellow
+L'agent conversationnel d'Yellow applique une charte d'éthique stricte :
 - **"L'agent conseille, le client décide" :** L'agent IA n'est pas autorisé à exécuter un ordre d'achat, un virement ou une souscription financière à la place de l'utilisateur.
 - **Affichage systématique du Score de Confiance :** Chaque réponse issue du système RAG est notée sur un barème de confiance (ex: 🟢 92 % de certitude documentaire). Si l'information est incertaine (score < 70 %), l'agent alerte l'utilisateur et lui recommande de valider avec un conseiller humain.
 - **Neutralité et absence de promesse de gain :** L'agent ne promet jamais de rentabilité garantie sur les marchés financiers et rappelle systématiquement les risques de perte en capital associés aux investissements.

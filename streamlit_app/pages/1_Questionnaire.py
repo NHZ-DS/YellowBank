@@ -1,9 +1,9 @@
-"""Page de Questionnaire d'Orientation — Archipel."""
+"""Page de Questionnaire d'Orientation — Yellow."""
 
 import streamlit as st
 from services.api_service import api_service
 
-st.set_page_config(page_title="1. Questionnaire — Archipel", page_icon=":material/list_alt:", layout="wide")
+st.set_page_config(page_title="1. Questionnaire — Yellow", page_icon="📋", layout="wide")
 
 try:
     with open("static/css/style.css", "r", encoding="utf-8") as f:
@@ -17,7 +17,7 @@ if "user" not in st.session_state or not st.session_state["user"]:
 
 user = st.session_state["user"]
 
-st.title(":material/list_alt: Questionnaire d'Orientation & Profiling")
+st.title("📋 Questionnaire d'Orientation & Profiling")
 st.write("Personnalisez votre expérience en 3 étapes rapides. Vos choix détermineront les jeux et badges débloquables.")
 
 st.divider()
@@ -38,19 +38,19 @@ with st.form("funnel_quiz"):
     st.subheader("2. Quels sont vos centres d'intérêt prioritaires ? (Sélection multiple)")
     col_i1, col_i2 = st.columns(2)
     with col_i1:
-        c_budget = st.checkbox(":material/shield: Budget, épargne d'urgence et maîtrise des charges", value=True)
-        c_pea = st.checkbox(":material/trending_up: Bourse, PEA et investissement progressif", value=True)
+        c_budget = st.checkbox("🛡️ Budget, épargne d'urgence et maîtrise des charges", value=True)
+        c_pea = st.checkbox(" Bourse, PEA et investissement progressif", value=True)
     with col_i2:
-        c_projets = st.checkbox(":material/school: Financement de projet (Permis 1€/jour, études, logement)", value=False)
-        c_aides = st.checkbox(":material/card_giftcard: Primes bancaires (bienvenue, mobilité) & Aides d'État", value=True)
+        c_projets = st.checkbox(" Financement de projet (Permis 1€/jour, études, logement)", value=False)
+        c_aides = st.checkbox(" Primes bancaires (bienvenue, mobilité) & Aides d'État", value=True)
 
     st.subheader("3. Quel est votre objectif principal du moment ?")
     objective = st.radio(
         "Sélectionnez votre parcours prioritaire :",
         [
-            ("courant", ":material/shield: ÉPARGNER : Maîtriser mon budget et sécuriser mon matelas de sécurité"),
-            ("pea", ":material/trending_up: INVESTIR : Découvrir les 6 niveaux du PEA et la bourse sans risque"),
-            ("projets", ":material/school: FINANCER UN PROJET : Mobiliser mes aides, prêts à 0% et primes")
+            ("courant", "🛡️ ÉPARGNER : Maîtriser mon budget et sécuriser mon matelas de sécurité"),
+            ("pea", " INVESTIR : Découvrir les 6 niveaux du PEA et la bourse sans risque"),
+            ("projets", " FINANCER UN PROJET : Mobiliser mes aides, prêts à 0% et primes")
         ],
         format_func=lambda x: x[1]
     )
@@ -70,5 +70,5 @@ if submit:
         time_horizon="moyen_terme"
     )
 
-    st.success(":material/check_circle: Vos réponses ont été enregistrées avec succès !")
-    st.page_link("pages/2_Situation.py", label="Accéder à ma Situation Visuelle", icon=":material/bar_chart:")
+    st.success(" Vos réponses ont été enregistrées avec succès !")
+    st.page_link("pages/2_Situation.py", label="Accéder à ma Situation Visuelle", icon="")
