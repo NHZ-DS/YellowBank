@@ -13,9 +13,9 @@ try:
 except Exception:
     pass
 
-# Connexion démo si personne n'est connecté
+# Connexion si personne n'est connecté
 if "user" not in ss or not ss["user"]:
-    login_res = api_service.login("demo", "demo123")
+    login_res = api_service.login("alex", "alex123")
     ss["user"] = login_res.get("user", {})
 user = ss["user"]
 

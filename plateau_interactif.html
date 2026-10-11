@@ -5,40 +5,23 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Plateau des parcours - Yello</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap"
+        rel="stylesheet">
     <style>
         :root {
-            /* Mode Clair (Plan d'architecte) */
-            --bg: #f5f4ef;
+            /* Mode Yello (Marine / Or / Bleu vif) */
+            --bg: #E6EBF5;
             --surface: #ffffff;
             --surface-rgb: 255, 255, 255;
-            --text: #2c3e50;
-            --text-muted: #7f8c8d;
-            --accent: #0f4c81;
-            /* Bleu profond */
-            --accent-hover: #1660a0;
-            --border: #dcd9d0;
-            --house-empty: #e0e0e0;
-            --house-filled: #0f4c81;
-            --grid-line: rgba(44, 62, 80, 0.05);
-            --success: #27ae60;
-        }
-
-        @media (prefers-color-scheme: dark) {
-            :root {
-                /* Mode Sombre */
-                --bg: #1a1b1e;
-                --surface: #25262b;
-                --surface-rgb: 37, 38, 43;
-                --text: #e9ecef;
-                --text-muted: #909296;
-                --accent: #4dabf7;
-                --accent-hover: #339af0;
-                --border: #373a40;
-                --house-empty: #495057;
-                --house-filled: #4dabf7;
-                --grid-line: rgba(255, 255, 255, 0.03);
-                --success: #40c057;
-            }
+            --text: #14213D;
+            --text-muted: #5B6785;
+            --accent: #1F2BE0;
+            --accent-hover: #14213D;
+            --border: #E3E8F3;
+            --house-empty: #EEF1F8;
+            --house-filled: #FFB800;
+            --grid-line: rgba(20, 33, 61, 0.05);
+            --success: #16A34A;
         }
 
         * {
@@ -48,7 +31,7 @@
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            font-family: 'Plus Jakarta Sans', sans-serif;
             background-color: var(--bg);
             color: var(--text);
             line-height: 1.5;
@@ -64,14 +47,17 @@
         }
 
         .header h1 {
-            font-weight: 600;
+            font-weight: 800;
             margin-bottom: 8px;
-            font-size: clamp(1.5rem, 4vw, 2.2rem);
+            font-size: clamp(1.8rem, 4vw, 34px);
+            color: var(--text);
+            line-height: 1.1;
         }
 
         .header p {
             color: var(--text-muted);
-            font-size: 0.95rem;
+            font-size: 15.5px;
+            font-weight: 500;
         }
 
         /* --- PLATEAU --- */
@@ -84,10 +70,10 @@
                 linear-gradient(var(--grid-line) 1px, transparent 1px),
                 linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
             background-size: 20px 20px;
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            padding: 10px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            border: 1.5px solid var(--border);
+            border-radius: 26px;
+            padding: 14px;
+            box-shadow: 0 8px 24px rgba(20, 33, 61, 0.08);
             margin-bottom: 30px;
         }
 
@@ -95,56 +81,74 @@
             display: grid;
             grid-template-columns: repeat(5, 1fr);
             grid-template-rows: repeat(5, 1fr);
-            gap: 8px;
+            gap: 10px;
             width: 100%;
             height: 100%;
         }
 
         .cell {
-            background: var(--surface);
-            border: 1px solid var(--border);
-            border-radius: 6px;
+            background-color: var(--surface);
+            background-size: cover;
+            background-position: center;
+            border: 1.5px solid var(--border);
+            border-radius: 16px;
             padding: 6px;
             cursor: pointer;
             display: flex;
             flex-direction: column;
-            justify-content: center;
+            justify-content: flex-end;
+            /* Text at bottom */
             align-items: center;
             text-align: center;
             position: relative;
-            transition: transform 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.02);
+            transition: transform 0.1s ease, border-color 0.15s ease, box-shadow 0.15s ease;
             user-select: none;
+            overflow: hidden;
+        }
+
+        .cell::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(20, 33, 61, 0.95) 0%, rgba(20, 33, 61, 0.4) 50%, rgba(20, 33, 61, 0.1) 100%);
+            z-index: 1;
+            transition: background 0.3s;
+        }
+
+        .cell:hover::before {
+            background: linear-gradient(to top, rgba(20, 33, 61, 0.9) 0%, rgba(20, 33, 61, 0.2) 60%, transparent 100%);
+        }
+
+        .cell>* {
+            position: relative;
+            z-index: 2;
         }
 
         .cell:hover {
             transform: translateY(-2px);
-            border-color: var(--accent);
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08);
+            border-color: #C9D1E8;
+            box-shadow: 0 4px 12px rgba(20, 33, 61, 0.04);
         }
 
         .cell.selected {
             border: 2px solid var(--accent);
-            background: rgba(15, 76, 129, 0.02);
-        }
-
-        @media (prefers-color-scheme: dark) {
-            .cell.selected {
-                background: rgba(77, 171, 247, 0.05);
-            }
+            background: var(--house-empty);
         }
 
         .cell-title {
-            font-size: clamp(0.55rem, 1.8vw, 0.9rem);
-            font-weight: 500;
+            font-size: clamp(0.55rem, 1.8vw, 0.95rem);
+            font-weight: 700;
             line-height: 1.2;
+            color: #ffffff;
             word-break: break-word;
+            margin-bottom: 4px;
+            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.6);
         }
 
         .houses {
             display: flex;
-            gap: 3px;
-            margin-top: 6px;
+            gap: 4px;
+            margin-bottom: 4px;
             flex-wrap: wrap;
             justify-content: center;
         }
@@ -152,7 +156,8 @@
         .house {
             width: clamp(8px, 2vw, 12px);
             height: clamp(8px, 2vw, 12px);
-            background: var(--house-empty);
+            background: rgba(255, 255, 255, 0.3);
+            /* Translucent white for empty houses on images */
             /* Forme de maison avec clip-path */
             clip-path: polygon(50% 0%, 100% 38%, 100% 100%, 0 100%, 0% 38%);
             transition: background-color 0.3s;
@@ -160,6 +165,7 @@
 
         .house.filled {
             background: var(--house-filled);
+            box-shadow: 0 0 5px rgba(255, 184, 0, 0.8);
         }
 
         .pawn {
@@ -174,17 +180,16 @@
         .dashboard {
             grid-column: 2 / 5;
             grid-row: 2 / 5;
-            background: rgba(var(--surface-rgb), 0.85);
-            backdrop-filter: blur(8px);
-            border: 1px solid var(--border);
-            border-radius: 8px;
+            background: rgba(var(--surface-rgb), 0.95);
+            backdrop-filter: blur(12px);
+            border-radius: 18px;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             text-align: center;
             padding: 20px;
-            box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.02);
+            box-shadow: 0 10px 30px rgba(20, 33, 61, 0.04);
         }
 
         .dash-subtitle {
@@ -227,10 +232,11 @@
             width: 100%;
             max-width: 850px;
             background: var(--surface);
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            padding: 24px;
+            border: 1.5px solid var(--border);
+            border-radius: 26px;
+            padding: 32px;
             margin-bottom: 30px;
+            box-shadow: 0 8px 24px rgba(20, 33, 61, 0.08);
         }
 
         .detail-header {
@@ -240,7 +246,9 @@
         }
 
         .detail-header h2 {
-            font-size: 1.6rem;
+            font-size: 26px;
+            font-weight: 800;
+            color: var(--text);
             margin-bottom: 8px;
         }
 
@@ -292,41 +300,58 @@
             display: flex;
             gap: 12px;
             flex-wrap: wrap;
+            margin-top: 10px;
         }
 
         button {
-            padding: 10px 20px;
-            font-size: 1rem;
-            font-weight: 500;
+            padding: 0 32px;
+            min-height: 52px;
+            font-size: 16px;
+            font-weight: 700;
             border: none;
-            border-radius: 6px;
+            border-radius: 99px;
             cursor: pointer;
-            transition: background 0.2s, opacity 0.2s;
+            transition: transform 0.1s, box-shadow 0.15s;
             font-family: inherit;
         }
 
         button:disabled {
             opacity: 0.5;
             cursor: not-allowed;
+            box-shadow: none !important;
+            transform: none !important;
         }
 
         .btn-primary {
-            background: var(--accent);
+            background: var(--text);
             color: #fff;
+            box-shadow: 0 6px 0 #0A1226;
         }
 
         .btn-primary:not(:disabled):hover {
-            background: var(--accent-hover);
+            transform: translateY(-2px);
+        }
+
+        .btn-primary:not(:disabled):active {
+            transform: translateY(4px);
+            box-shadow: 0 2px 0 #0A1226;
         }
 
         .btn-secondary {
             background: var(--surface);
             color: var(--text);
-            border: 1px solid var(--border);
+            border: 2px solid var(--text);
+            box-shadow: 0 4px 0 #0A1226;
         }
 
         .btn-secondary:not(:disabled):hover {
             background: var(--house-empty);
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary:not(:disabled):active {
+            transform: translateY(4px);
+            box-shadow: 0 0px 0 #0A1226;
         }
 
         /* --- MODULE INVESTIR --- */
@@ -432,22 +457,22 @@
     <script>
         // ---------- DONNEES ----------
         const P = [
-            { name: "🧭 Profil de risque", color: "#95a5a6", desc: "Mini-questionnaire pour calibrer ton plateau.", steps: [["Questionnaire", "Profil défini"]] },
-            { name: "Budget", color: "#27ae60", desc: "Voir clair dans tes dépenses.", steps: [["Test de résistance", "Sécurité Testée"], ["Quizz budgétaire 50/30/20", "Gestionnaire Prudent"]] },
-            { name: "Épargner", color: "#16a085", desc: "Construire ton matelas, puis ton projet.", steps: [["Définir ta capacité", "Cap fixé"], ["Automatiser le virement", "Pilote auto"], ["1 mois d'avance", "Matelas 1 mois"], ["Optimiser le support", "Épargnant averti"], ["3 mois de dépenses", "Sécurité 3 mois"]] },
-            { name: "Fonds de sécurité", color: "#2980b9", desc: "Une structure qui résiste aux imprévus.", steps: [["Test d'imprévu simulé", "Choc absorbé"], ["1 mois", "Mois 1"], ["2 mois", "Mois 2"], ["3 mois", "Mois 3"], ["Test perte d'emploi", "Sécurité testée"]] },
-            { name: "📡 Radar marché", color: "#f39c12", desc: "Ton agent IA t'informe : stable, volatil ou turbulent. Il informe, il ne conseille pas.", steps: [["Choisir tes centres d'intérêt", "Intérêts définis"], ["Premier briefing", "Informé"]] },
-            { name: "Voiture", color: "#e67e22", desc: "Financer ton apport.", steps: [["Châssis : faire le point", "Vision claire"], ["Roues : fixer l'objectif", "Cap fixé"], ["Moteur : automatiser", "Pilote auto"], ["Carrosserie : 50 %", "Mi-parcours"], ["Livraison : 100 %", "Cap tenu"]] },
-            { name: "Appartement", color: "#8e44ad", desc: "Constituer ton apport.", steps: [["Estimer le coût total", "Projet chiffré"], ["Simuler un crédit", "Simulation faite"], ["Apport 25 %", "Fondations"], ["Apport 75 %", "Murs"], ["Comparer les offres", "Clés en main"]] },
-            { name: "Voyage", color: "#e84393", desc: "Un itinéraire qui se débloque.", steps: [["Destination et budget", "Cap fixé"], ["Cagnotte 33 %", "Billets"], ["Cagnotte 66 %", "Hébergement"], ["Cagnotte 100 %", "Départ"]] },
-            { name: "🛡️ Bouclier", color: "#f1c40f", desc: "Vérifie un site, un IBAN ou une plateforme avant d'agir.", steps: [["Première vérification", "Vigilant"], ["Mission Détective", "Enquêteur"]] },
-            { name: "Anti-arnaques", color: "#c0392b", desc: "Repère les signaux d'alerte.", steps: [["5 signaux d'alerte", "Œil exercé"], ["Vérifier un site / IBAN", "Contrôle fait"], ["Scénario Détective", "Enquêteur"], ["Sécuriser ses comptes", "Verrouillé"], ["Protéger un proche", "Gardien"]] },
-            { name: "Investir", color: "#2c3e50", desc: "Découvrez la bourse en 6 niveaux progressifs.", steps: [["L'Explorateur", "Niveau 1"], ["Le Stratège", "Niveau 2"], ["Le Gestionnaire", "Niveau 3"], ["Virtuel 10k€", "Niveau 4"], ["Ouverture PEA", "Niveau 5"], ["Yello Master", "Niveau 6"]] },
-            { name: "Projets & Aides", color: "#00cec9", desc: "Financer une formation ou un permis.", steps: [["Valider mon bilan", "Bilan validé"]] },
-            { name: "🏁 Bilan", color: "#34495e", desc: "Un bilan sobre à la fin de chaque parcours.", steps: [["Bilan de parcours", "Parcours bouclé"]] },
-            { name: "Freelance", color: "#6c5ce7", desc: "Revenus irréguliers, impôts, cotisations.", steps: [["Provision impôts auto", "Provisionné"], ["Lisser ses revenus", "Lissé"], ["Trésorerie 3 mois", "Serein"]] },
-            { name: "Crédit responsable", color: "#d35400", desc: "Comprendre avant de s'engager.", steps: [["TAEG et assurance", "Lecture claire"], ["Simuler 3 scénarios", "Simulé"], ["Comparer les offres", "Comparé"]] },
-            { name: "Long terme", color: "#7f8c8d", desc: "Préparer l'avenir sans y penser tous les jours.", steps: [["Comprendre les enveloppes", "Enveloppes vues"], ["Premier versement programmé", "Lancé"], ["Revue annuelle", "Cap suivi"]] },
+            { name: "🧭 Profil de risque", img: "picsum:29", color: "#95a5a6", desc: "Mini-questionnaire pour calibrer ton plateau.", steps: [["Questionnaire", "Profil défini"]] },
+            { name: "Budget", img: "1554224155-8d04cb21cd6c", color: "#27ae60", desc: "Voir clair dans tes dépenses.", steps: [["Test de résistance", "Sécurité Testée"], ["Quizz budgétaire 50/30/20", "Gestionnaire Prudent"]] },
+            { name: "Épargner", img: "1579621970588-a35d0e7ab9b6", color: "#16a085", desc: "Construire ton matelas, puis ton projet.", steps: [["Définir ta capacité", "Cap fixé"], ["Automatiser le virement", "Pilote auto"], ["1 mois d'avance", "Matelas 1 mois"], ["Optimiser le support", "Épargnant averti"], ["3 mois de dépenses", "Sécurité 3 mois"]] },
+            { name: "Fonds de sécurité", img: "picsum:30", color: "#2980b9", desc: "Une structure qui résiste aux imprévus.", steps: [["Test d'imprévu simulé", "Choc absorbé"], ["1 mois", "Mois 1"], ["2 mois", "Mois 2"], ["3 mois", "Mois 3"], ["Test perte d'emploi", "Sécurité testée"]] },
+            { name: "📡 Radar marché", img: "1611974789855-9c2a0a7236a3", color: "#f39c12", desc: "Ton agent IA t'informe : stable, volatil ou turbulent. Il informe, il ne conseille pas.", steps: [["Choisir tes centres d'intérêt", "Intérêts définis"], ["Premier briefing", "Informé"]] },
+            { name: "Voiture", img: "1492144534655-ae79c964c9d7", color: "#e67e22", desc: "Financer ton apport.", steps: [["Châssis : faire le point", "Vision claire"], ["Roues : fixer l'objectif", "Cap fixé"], ["Moteur : automatiser", "Pilote auto"], ["Carrosserie : 50 %", "Mi-parcours"], ["Livraison : 100 %", "Cap tenu"]] },
+            { name: "Appartement", img: "1560518883-ce09059eeffa", color: "#8e44ad", desc: "Constituer ton apport.", steps: [["Estimer le coût total", "Projet chiffré"], ["Simuler un crédit", "Simulation faite"], ["Apport 25 %", "Fondations"], ["Apport 75 %", "Murs"], ["Comparer les offres", "Clés en main"]] },
+            { name: "Voyage", img: "picsum:35", color: "#e84393", desc: "Un itinéraire qui se débloque.", steps: [["Destination et budget", "Cap fixé"], ["Cagnotte 33 %", "Billets"], ["Cagnotte 66 %", "Hébergement"], ["Cagnotte 100 %", "Départ"]] },
+            { name: "🛡️ Bouclier", img: "picsum:96", color: "#f1c40f", desc: "Vérifie un site, un IBAN ou une plateforme avant d'agir.", steps: [["Première vérification", "Vigilant"], ["Mission Détective", "Enquêteur"]] },
+            { name: "Anti-arnaques", img: "1526304640581-d334cdbbf45e", color: "#c0392b", desc: "Repère les signaux d'alerte.", steps: [["5 signaux d'alerte", "Œil exercé"], ["Vérifier un site / IBAN", "Contrôle fait"], ["Scénario Détective", "Enquêteur"], ["Sécuriser ses comptes", "Verrouillé"], ["Protéger un proche", "Gardien"]] },
+            { name: "Investir", img: "1611974789855-9c2a0a7236a3", color: "#2c3e50", desc: "Découvrez la bourse en 6 niveaux progressifs.", steps: [["L'Explorateur", "Niveau 1"], ["Le Stratège", "Niveau 2"], ["Le Gestionnaire", "Niveau 3"], ["Virtuel 10k€", "Niveau 4"], ["Ouverture PEA", "Niveau 5"], ["Yello Master", "Niveau 6"]] },
+            { name: "Projets & Aides", img: "picsum:48", color: "#00cec9", desc: "Financer une formation ou un permis.", steps: [["Valider mon bilan", "Bilan validé"]] },
+            { name: "🏁 Bilan", img: "1541339907198-e08756dedf3f", color: "#34495e", desc: "Un bilan sobre à la fin de chaque parcours.", steps: [["Bilan de parcours", "Parcours bouclé"]] },
+            { name: "Freelance", img: "1498050108023-c5249f4df085", color: "#6c5ce7", desc: "Revenus irréguliers, impôts, cotisations.", steps: [["Provision impôts auto", "Provisionné"], ["Lisser ses revenus", "Lissé"], ["Trésorerie 3 mois", "Serein"]] },
+            { name: "Crédit responsable", img: "1556742049-0cfed4f6a45d", color: "#d35400", desc: "Comprendre avant de s'engager.", steps: [["TAEG et assurance", "Lecture claire"], ["Simuler 3 scénarios", "Simulé"], ["Comparer les offres", "Comparé"]] },
+            { name: "Long terme", img: "1536882240095-0379873feb4e", color: "#7f8c8d", desc: "Préparer l'avenir sans y penser tous les jours.", steps: [["Comprendre les enveloppes", "Enveloppes vues"], ["Premier versement programmé", "Lancé"], ["Revue annuelle", "Cap suivi"]] },
         ];
 
         const SEC = {
@@ -518,8 +543,7 @@
                 const pos = GRID_POS[i];
                 const isCorner = CORNERS.includes(i);
 
-                let html = `<div style="height: 6px; background-color: ${p.color}; position: absolute; top: 0; left: 0; right: 0;"></div>
-                            <div class="cell-title" style="margin-top: 4px;">${p.name}</div>`;
+                let html = `<div style="height: 6px; background-color: ${p.color}; position: absolute; top: 0; left: 0; right: 0; z-index: 10;"></div>`;
 
                 if (!isCorner) {
                     const total = p.steps.length;
@@ -532,6 +556,8 @@
                     html += housesHtml;
                 }
 
+                html += `<div class="cell-title">${p.name}</div>`;
+
                 if (state.active === i) {
                     html += `<div class="pawn">📍</div>`;
                 }
@@ -540,6 +566,13 @@
                 cell.className = `cell ${state.sel === i ? 'selected' : ''}`;
                 cell.style.gridRow = pos[0];
                 cell.style.gridColumn = pos[1];
+
+                // fallback picsum ou unsplash
+                let bgUrl = p.img.startsWith('picsum:') ?
+                    `https://picsum.photos/id/${p.img.split(':')[1]}/400/400` :
+                    `https://images.unsplash.com/photo-${p.img}?w=400&q=80`;
+
+                cell.style.backgroundImage = `url('${bgUrl}')`;
                 cell.innerHTML = html;
                 cell.onclick = () => {
                     state.sel = i;
@@ -603,45 +636,10 @@
             const allDone = state.done[i] >= p.steps.length;
 
             html += `<button class="btn-primary" id="btn-start" ${isActive ? 'disabled' : ''}>${isActive ? 'Parcours actif' : 'Commencer ce parcours'}</button>`;
-            html += `<button class="btn-secondary" id="btn-step" ${!isActive || allDone ? 'disabled' : ''}>Valider l'étape suivante (démo)</button>`;
+            html += `<button class="btn-secondary" id="btn-step" ${!isActive || allDone ? 'disabled' : ''}>Valider l'étape suivante</button>`;
             html += `</div>`;
 
-            // Module spécifique "Investir"
-            if (p.name === "Investir") {
-                html += `<div class="invest-module">
-                    <h3 style="margin-bottom: 12px;">Quels secteurs t'intéressent ?</h3>
-                    <div class="sectors">`;
 
-                Object.keys(SEC).forEach(sec => {
-                    html += `<button class="sector-btn ${state.sec === sec ? 'active' : ''}" onclick="selectSector('${sec}')">${sec}</button>`;
-                });
-
-                html += `</div>`;
-
-                if (state.sec && SEC[state.sec]) {
-                    html += `<p style="color:var(--text-muted); font-size:0.9rem; margin-bottom:16px;">Entreprises du secteur « ${state.sec} » (données fictives)</p>`;
-                    html += `<div class="cards-grid">`;
-
-                    SEC[state.sec].forEach(c => {
-                        const s = generateSeries(c, 24);
-                        const perf = ((s[s.length - 1] / s[0]) - 1) * 100;
-                        const svg = renderSvgChart(s);
-
-                        html += `
-                            <div class="stock-card">
-                                <h4>${c[0]}</h4>
-                                <p class="desc">${c[1]}</p>
-                                <div class="chart-container">${svg}</div>
-                                <div class="perf-text" style="color: ${perf >= 0 ? 'var(--success)' : 'inherit'}">${perf > 0 ? '+' : ''}${perf.toFixed(1)} % sur 1 an</div>
-                                <div class="ambiance-text">${ambiance(c[7])}</div>
-                            </div>
-                        `;
-                    });
-
-                    html += `</div>`;
-                }
-                html += `</div>`;
-            }
 
             detailEl.innerHTML = html;
 
@@ -649,12 +647,12 @@
             document.getElementById('btn-start').onclick = () => {
                 state.active = i;
                 render();
-                
+
                 let targetBtn = null;
                 if (P[i].name === "Investir") targetBtn = "HIDDEN_GO_PEA";
                 else if (P[i].name === "Budget") targetBtn = "HIDDEN_GO_BUDGET";
                 else if (P[i].name === "Projets & Aides") targetBtn = "HIDDEN_GO_PROJETS";
-                
+
                 if (targetBtn) {
                     try {
                         const btns = window.parent.document.querySelectorAll('button');
