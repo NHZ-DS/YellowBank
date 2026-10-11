@@ -1,4 +1,4 @@
-# 🏝️ Yello (Yello) — Compagnon Financier Intelligent & Gamifié
+#  Yello (Yello) — Compagnon Financier Intelligent & Gamifié
 
 Application bancaire et d'investissement nouvelle génération combinant une interface mobile **Streamlit**, un backend asynchrone **FastAPI**, un système **Multi-Agents IA (RAG, FAQ, Chitchat)** et un moteur de **Gamification** (missions, badges, 3 parcours d'accompagnement).
 
