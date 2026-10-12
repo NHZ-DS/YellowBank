@@ -8,6 +8,27 @@ API_BASE_URL = os.getenv("BACKEND_API_URL", "http://127.0.0.1:8000")
 TIMEOUT = 4.0
 
 
+def _load_local_env():
+    """Charge automatiquement .env s'il existe pour tester en local sans package tiers."""
+    for path in [".env", "../.env", "../../.env"]:
+        if os.path.exists(path):
+            try:
+                with open(path, "r", encoding="utf-8") as f:
+                    for line in f:
+                        line = line.strip()
+                        if line and not line.startswith("#") and "=" in line:
+                            k, v = line.split("=", 1)
+                            k = k.strip()
+                            v = v.strip().strip("'\"")
+                            if k and k not in os.environ:
+                                os.environ[k] = v
+            except Exception:
+                pass
+            break
+
+_load_local_env()
+
+
 class ApiService:
     """Encapsule les requêtes vers l'API FastAPI avec fallback local pour garantir la continuité."""
 
@@ -168,9 +189,17 @@ class ApiService:
             "Consignes : Réponds précisément avec des puces et du gras pour faciliter la lecture. Ne sors pas de ton rôle de conseiller Yello."
         )
 
-        # 1. Option prioritaire : Groq (Llama 3 70B / 8B - Ultra-rapide et gratuit)
+        # 1. Option prioritaire : Groq (Llama / Open-source puissant, 100% gratuit et instantané)
         if groq_key:
-            for model_name in ["llama-3.3-70b-versatile", "llama-3.1-8b-instant", "llama3-8b-8192"]:
+            groq_models = [
+                "openai/gpt-oss-120b",
+                "qwen/qwen3.8-27b",
+                "llama-3.3-70b-versatile",
+                "llama-3.1-8b-instant",
+                "llama3-8b-8192",
+                "openai/gpt-oss-20b"
+            ]
+            for model_name in groq_models:
                 try:
                     r = requests.post(
                         "https://api.groq.com/openai/v1/chat/completions",
@@ -189,7 +218,7 @@ class ApiService:
                         return {
                             "answer": ans, "content": ans, "confidence": 0.98, "confidence_score": 0.98,
                             "agent": "rag", "sender_agent": "rag_agent",
-                            "sources": [{"title": "Base Documentaire Yello (Llama 3)", "snippet": f"Généré en direct par Llama 3 ({model_name})."}]
+                            "sources": [{"title": f"Base Documentaire Yello ({model_name})", "snippet": "Réponse générée par IA Cloud sécurisée."}]
                         }
                     else:
                         print(f"[API_SERVICE] Groq erreur HTTP {r.status_code} ({model_name}): {r.text[:200]}")
