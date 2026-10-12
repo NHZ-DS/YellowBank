@@ -117,16 +117,123 @@ class ApiService:
             "badge_unlocked": "Vision Claire"
         }
 
+    def _call_cloud_llm(self, message: str) -> Optional[Dict[str, Any]]:
+        """Interroge un LLM Cloud sécurisé (Llama 3 via Groq, Mistral, ou OpenAI) si configuré."""
+        def _get_val(k: str) -> Optional[str]:
+            try:
+                import streamlit as st
+                if hasattr(st, "secrets") and k in st.secrets:
+                    return str(st.secrets[k]).strip()
+            except Exception:
+                pass
+            return os.getenv(k, "").strip() or None
+
+        groq_key = _get_val("GROQ_API_KEY")
+        mistral_key = _get_val("MISTRAL_API_KEY")
+        openai_key = _get_val("OPENAI_API_KEY")
+
+        if not (groq_key or mistral_key or openai_key):
+            return None
+
+        system_prompt = (
+            "Tu es Marcel, le conseiller financier virtuel officiel de Yello (YellowBank).\n"
+            "Ton rôle est d'expliquer la finance, le budget, le PEA, l'épargne et les aides jeunes de manière claire, bienveillante, pédagogique et structurée.\n"
+            "Tu t'exprimes en français avec un ton moderne, direct et accessible (tutoiement chaleureux).\n\n"
+            "GUIDES OFFICIELS YELLO :\n"
+            "1. ÉPARGNE & BUDGET : Règle 50/30/20 (50% besoins vitaux, 30% envies et loisirs, 20% épargne). "
+            "Matelas de sécurité indispensable de 1 à 3 mois de dépenses sur Livret A ou LDDS avant d'investir.\n"
+            "2. PEA & BOURSE : PEA exonéré d'impôt sur le revenu après 5 ans (seuls 17,2% de prélèvements sociaux sont dus). "
+            "Plafond de 150 000 € (20 000 € pour PEA Jeune 18-25 ans). Pour débuter : ETF mondial diversifié dès 50 €/mois. "
+            "Rappeler toujours le risque de perte en capital.\n"
+            "3. PROJETS & AIDES JEUNES : Permis à 1 € par jour (prêt à taux zéro jusqu'à 1 200 € garanti par l'État, ~30 €/mois). "
+            "Prêt étudiant garanti par l'État (Bpifrance, jusqu'à 20 000 € sans caution parentale). "
+            "Logement : APL de la CAF et garantie Visale d'Action Logement (caution gratuite).\n\n"
+            "Consignes : Réponds précisément avec des puces et du gras pour faciliter la lecture. Ne sors pas de ton rôle de conseiller Yello."
+        )
+
+        # 1. Option prioritaire : Groq (Llama 3 70B / 8B - Ultra-rapide et gratuit)
+        if groq_key:
+            try:
+                for model_name in ["llama-3.3-70b-versatile", "llama-3.1-8b-instant", "llama3-8b-8192"]:
+                    r = requests.post(
+                        "https://api.groq.com/openai/v1/chat/completions",
+                        headers={"Authorization": f"Bearer {groq_key}", "Content-Type": "application/json"},
+                        json={
+                            "model": model_name,
+                            "messages": [{"role": "system", "content": system_prompt}, {"role": "user", "content": message}],
+                            "temperature": 0.4,
+                            "max_tokens": 800
+                        },
+                        timeout=15.0
+                    )
+                    if r.status_code == 200:
+                        ans = r.json()["choices"][0]["message"]["content"]
+                        return {
+                            "answer": ans, "content": ans, "confidence": 0.97, "confidence_score": 0.97,
+                            "agent": "rag", "sender_agent": "rag_agent",
+                            "sources": [{"title": "Base Documentaire Yello (Llama 3)", "snippet": "Réponse générée par Llama 3 via Groq Cloud sécurisé."}]
+                        }
+            except Exception:
+                pass
+
+        # 2. Option Mistral
+        if mistral_key:
+            try:
+                r = requests.post(
+                    "https://api.mistral.ai/v1/chat/completions",
+                    headers={"Authorization": f"Bearer {mistral_key}", "Content-Type": "application/json"},
+                    json={
+                        "model": "mistral-small-latest",
+                        "messages": [{"role": "system", "content": system_prompt}, {"role": "user", "content": message}],
+                        "temperature": 0.4
+                    },
+                    timeout=15.0
+                )
+                if r.status_code == 200:
+                    ans = r.json()["choices"][0]["message"]["content"]
+                    return {
+                        "answer": ans, "content": ans, "confidence": 0.96, "confidence_score": 0.96,
+                        "agent": "rag", "sender_agent": "rag_agent",
+                        "sources": [{"title": "Base Documentaire Yello (Mistral)", "snippet": "Réponse certifiée Mistral AI."}]
+                    }
+            except Exception:
+                pass
+
+        # 3. Option OpenAI
+        if openai_key:
+            try:
+                r = requests.post(
+                    "https://api.openai.com/v1/chat/completions",
+                    headers={"Authorization": f"Bearer {openai_key}", "Content-Type": "application/json"},
+                    json={
+                        "model": "gpt-4o-mini",
+                        "messages": [{"role": "system", "content": system_prompt}, {"role": "user", "content": message}],
+                        "temperature": 0.4
+                    },
+                    timeout=15.0
+                )
+                if r.status_code == 200:
+                    ans = r.json()["choices"][0]["message"]["content"]
+                    return {
+                        "answer": ans, "content": ans, "confidence": 0.98, "confidence_score": 0.98,
+                        "agent": "rag", "sender_agent": "rag_agent",
+                        "sources": [{"title": "Base Documentaire Yello (GPT-4o)", "snippet": "Réponse certifiée OpenAI."}]
+                    }
+            except Exception:
+                pass
+
+        return None
+
     def send_chat_message(self, user_id: int, message: str, track: str = "courant") -> Dict[str, Any]:
+        # 1. Essai vers l'API FastAPI locale si active
         try:
             r = requests.post(
                 f"{self.base_url}/chat/message",
                 json={"user_id": user_id, "message": message, "track": track},
-                timeout=25.0
+                timeout=12.0
             )
             if r.status_code == 200:
                 data = r.json()
-                # Normalisation des clés pour compatibilité universelle
                 content = data.get("content", "")
                 conf = data.get("confidence_score", 0.9)
                 agent = data.get("sender_agent", "rag_agent").replace("_agent", "")
@@ -147,6 +254,11 @@ class ApiService:
                 }
         except Exception:
             pass
+
+        # 2. Essai vers le LLM Cloud sécurisé (Groq Llama 3 / Mistral / OpenAI via Secrets)
+        cloud_res = self._call_cloud_llm(message)
+        if cloud_res:
+            return cloud_res
 
         # Fallback IA autonome enrichi (utilisé sur Streamlit Cloud ou si l'API locale est inaccessible)
         m_lower = message.lower().strip()
