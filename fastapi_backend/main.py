@@ -6,13 +6,13 @@ from fastapi.middleware.cors import CORSMiddleware
 from utils import Base, engine, SessionLocal, hash_password
 from models.user import UserModel
 from models.mission import MissionModel, UserBadgeModel
-from routers import auth_router, onboarding_router, chat_router, gamification_router, profile_router
+from routers import onboarding_router, chat_router, gamification_router, profile_router
 from services.gamification_service import gamification_service_instance
 
 # Initialisation de l'application FastAPI
 app = FastAPI(
     title="🏝️ Yello — API Bancaire & IA Conversationnelle",
-    description="Backend microservices pour Yello combinant SQL Server, Multi-agents RAG et Gamification.",
+    description="Backend microservices pour Yello combinant SQLite, Multi-agents RAG et Gamification.",
     version="1.0.0"
 )
 
@@ -25,8 +25,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Montage des Routeurs
-app.include_router(auth_router.router)
+# Montage des Routeurs (Pas d'authentification standalone : Yello s'intègre directement dans la session de l'app bancaire hôte)
 app.include_router(onboarding_router.router)
 app.include_router(chat_router.router)
 app.include_router(gamification_router.router)

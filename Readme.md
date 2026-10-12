@@ -43,7 +43,7 @@ Yello/
 
 ---
 
-## 🚀 Démarrage Rapide
+## Démarrage Rapide
 
 ### 1. Lancer le Backend FastAPI
 ```bash

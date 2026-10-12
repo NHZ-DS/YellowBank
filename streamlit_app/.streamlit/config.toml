@@ -1,0 +1,12 @@
+[server]
+enableCORS = false
+enableXsrfProtection = false
+address = "0.0.0.0"
+
+[theme]
+# Couleurs Yello appliquées à tous les composants Streamlit (curseurs, boutons, onglets, cases…)
+primaryColor = "#1F2BE0"
+backgroundColor = "#E6EBF5"
+secondaryBackgroundColor = "#FFFFFF"
+textColor = "#14213D"
+font = "sans serif"

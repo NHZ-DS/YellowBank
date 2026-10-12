@@ -1,7 +1,6 @@
 """Profil investisseur — débloqué quand les 6 niveaux du parcours Investir sont validés."""
 
 import streamlit as st
-import requests
 from services.api_service import api_service
 
 st.set_page_config(page_title="9. Profil investisseur — Yello", page_icon="📈", layout="wide")
@@ -47,39 +46,93 @@ SECTEURS = {
     "sport": {"label": "Sport",      "icon": "sports_soccer",     "style": "n"},
 }
 
-# name, activité, siège, bourse, éligible PEA
+# Entreprises FICTIVES pour la démonstration : nom, activité, siège, bourse, éligible PEA
 CARTES = {
     "eco": [
-        ("Schneider Electric", "Fabrique des équipements pour gérer l'électricité et économiser l'énergie.", "Rueil-Malmaison", "Paris", True),
-        ("Veolia", "Gère l'eau, les déchets et l'énergie pour les villes et les industries.", "Aubervilliers", "Paris", True),
-        ("Vestas", "Construit et installe des éoliennes partout dans le monde.", "Aarhus (Danemark)", "Copenhague", True),
+        ("Aeolis Énergie", "Construit et exploite des parcs éoliens terrestres.", "Nantes", "Euronext Paris", True),
+        ("Solvia Group", "Fabrique des panneaux solaires et des batteries de stockage.", "Montpellier", "Euronext Paris", True),
+        ("Hydrane", "Produit de l'électricité grâce aux barrages et gère des réseaux.", "Grenoble", "Euronext Paris", True),
     ],
     "tech": [
-        ("Capgemini", "Aide les entreprises à se transformer grâce au numérique.", "Paris", "Paris", True),
-        ("Dassault Systèmes", "Crée des logiciels 3D pour concevoir avions, voitures et objets.", "Vélizy-Villacoublay", "Paris", True),
-        ("ASML", "Fabrique les machines qui gravent les puces électroniques.", "Veldhoven (Pays-Bas)", "Amsterdam", True),
+        ("Nuvora", "Développe des logiciels de cybersécurité pour les entreprises.", "Rennes", "Euronext Paris", True),
+        ("Pixalis", "Conçoit des puces électroniques pour les objets connectés.", "Grenoble", "Euronext Paris", True),
+        ("Datacime", "Héberge les données et les applications des PME dans le cloud.", "Lille", "Euronext Paris", True),
     ],
     "indus": [
-        ("Michelin", "Fabrique des pneus pour voitures, camions et avions.", "Clermont-Ferrand", "Paris", True),
-        ("Airbus", "Conçoit et assemble des avions, des hélicoptères et des satellites.", "Blagnac (Toulouse)", "Paris", True),
-        ("Saint-Gobain", "Produit des matériaux pour construire et rénover les bâtiments.", "Courbevoie", "Paris", True),
+        ("Ferralis", "Fabrique des pièces de précision pour l'aéronautique.", "Toulouse", "Euronext Paris", True),
+        ("Rotec Industries", "Conçoit des robots pour automatiser les usines.", "Lyon", "Euronext Paris", True),
+        ("Vitralis", "Produit du verre et des matériaux isolants pour les bâtiments.", "Reims", "Euronext Paris", True),
     ],
     "sante": [
-        ("Sanofi", "Développe des médicaments et des vaccins.", "Paris", "Paris", True),
-        ("EssilorLuxottica", "Fabrique des verres de lunettes et des montures.", "Charenton-le-Pont", "Paris", True),
-        ("bioMérieux", "Conçoit des tests pour diagnostiquer les maladies.", "Marcy-l'Étoile", "Paris", True),
+        ("Medivia", "Fabrique des médicaments génériques.", "Lyon", "Euronext Paris", True),
+        ("Optalis", "Conçoit des verres de lunettes et des lentilles.", "Paris", "Euronext Paris", True),
+        ("Genexa", "Développe des tests pour diagnostiquer les maladies.", "Strasbourg", "Euronext Paris", True),
     ],
     "immo": [
-        ("Gecina", "Possède et loue des bureaux et des logements, surtout à Paris.", "Paris", "Paris", False),
-        ("Klépierre", "Possède et gère des centres commerciaux en Europe.", "Paris", "Paris", False),
-        ("Covivio", "Possède des bureaux, des hôtels et des logements en Europe.", "Metz", "Paris", False),
+        ("Pierravenir", "Possède et loue des bureaux à Paris et à Lyon.", "Paris", "Euronext Paris", False),
+        ("Résidia", "Possède et gère des résidences étudiantes.", "Bordeaux", "Euronext Paris", False),
+        ("Commerco", "Possède et gère des centres commerciaux.", "Marseille", "Euronext Paris", False),
     ],
     "sport": [
-        ("Adidas", "Crée des chaussures, des vêtements et des équipements de sport.", "Herzogenaurach (Allemagne)", "Francfort", True),
-        ("Puma", "Crée des chaussures et des tenues de sport.", "Herzogenaurach (Allemagne)", "Francfort", True),
-        ("Compagnie des Alpes", "Exploite des stations de ski et des parcs de loisirs.", "Paris", "Paris", True),
+        ("Stridea", "Crée des chaussures et des vêtements de running.", "Annecy", "Euronext Paris", True),
+        ("Alpyn Loisirs", "Exploite des stations de ski et des parcs de loisirs.", "Chambéry", "Euronext Paris", True),
+        ("Arena+", "Gère un réseau de salles de sport.", "Nice", "Euronext Paris", True),
     ],
 }
+
+# Données financières FICTIVES : performance 1 an (%), croissance des ventes (%), marge nette (%),
+# endettement (dette nette / fonds propres, %), rendement du dividende (%)
+FIN = {
+    "Aeolis Énergie": (1.8, 6.5, 9.0, 85, 2.1), "Solvia Group": (-3.1, 12.0, 2.5, 120, 0.0), "Hydrane": (-5.0, 1.5, 11.0, 70, 4.2),
+    "Nuvora": (14.2, 18.0, 15.0, 20, 0.0), "Pixalis": (-8.4, -2.0, 6.0, 45, 0.8), "Datacime": (6.7, 9.5, 7.5, 60, 1.2),
+    "Ferralis": (9.3, 7.0, 8.0, 55, 2.0), "Rotec Industries": (3.1, 4.0, 10.5, 35, 1.5), "Vitralis": (-1.2, 0.5, 6.5, 90, 3.0),
+    "Medivia": (4.5, 3.5, 12.0, 40, 2.8), "Optalis": (7.8, 6.0, 14.0, 30, 1.9), "Genexa": (-6.3, -4.0, 1.5, 65, 0.0),
+    "Pierravenir": (-2.4, 1.0, 22.0, 95, 5.1), "Résidia": (3.6, 5.5, 18.0, 80, 4.4), "Commerco": (-4.1, -1.5, 15.0, 110, 6.0),
+    "Stridea": (11.5, 10.0, 8.5, 25, 1.0), "Alpyn Loisirs": (-0.8, 2.0, 7.0, 75, 2.5), "Arena+": (5.2, 14.0, 3.5, 100, 0.0),
+}
+
+
+def serie(nom: str, perf: float, n: int = 52) -> list:
+    """Courbe hebdomadaire fictive sur 1 an qui finit exactement à +perf %."""
+    import random
+    rng = random.Random(nom)
+    walk = [0.0]
+    for _ in range(n - 1):
+        walk.append(walk[-1] + rng.gauss(0, 1.6))
+    return [100 * (1 + perf / 100 * i / (n - 1)) + (w - walk[-1] * i / (n - 1)) for i, w in enumerate(walk)]
+
+
+def sparkline(nom: str, perf: float, h: int = 70, dark: bool = False) -> str:
+    pts = serie(nom, perf)
+    lo, hi = min(pts), max(pts)
+    xs = [i * 300 / (len(pts) - 1) for i in range(len(pts))]
+    ys = [h - 6 - (p - lo) / (hi - lo or 1) * (h - 12) for p in pts]
+    line = " ".join(f"{x:.1f},{y:.1f}" for x, y in zip(xs, ys))
+    col = ("#4ADE80" if dark else "#16A34A") if perf >= 0 else ("#F87171" if dark else "#DC2626")
+    return (f'<svg viewBox="0 0 300 {h}" preserveAspectRatio="none" style="width:100%;height:{h}px;display:block">'
+            f'<polygon points="0,{h} {line} 300,{h}" fill="{col}" opacity=".18"/>'
+            f'<polyline points="{line}" fill="none" stroke="{col}" stroke-width="2.5" stroke-linejoin="round" vector-effect="non-scaling-stroke"/></svg>')
+
+
+def sante(nom: str) -> dict:
+    perf, ca, marge, dette, div = FIN[nom]
+    def feu(v, bon, moyen, inverse=False):
+        if inverse:
+            return "g" if v <= bon else ("y" if v <= moyen else "r")
+        return "g" if v >= bon else ("y" if v >= moyen else "r")
+    ind = [
+        ("Croissance des ventes", f"{ca:+.1f} %", feu(ca, 5, 0),
+         "Ses ventes augmentent nettement." if ca >= 5 else ("Ses ventes progressent peu." if ca >= 0 else "Ses ventes reculent.")),
+        ("Rentabilité (marge nette)", f"{marge:.1f} %", feu(marge, 10, 3),
+         f"Sur 100 € de ventes, il lui reste {marge:.0f} € de bénéfice."),
+        ("Endettement", f"{dette} %", feu(dette, 50, 100, inverse=True),
+         "Peu endettée." if dette <= 50 else ("Endettement modéré." if dette <= 100 else "Très endettée : à surveiller.")),
+    ]
+    verts = sum(1 for i in ind if i[2] == "g")
+    rouges = sum(1 for i in ind if i[2] == "r")
+    verdict = ("Solide", "g") if verts >= 2 and rouges == 0 else (("Fragile", "r") if rouges >= 2 or verts == 0 else ("Correcte", "y"))
+    return {"perf": perf, "div": div, "ind": ind, "verdict": verdict}
+
 
 for k, v in {"inv_step": "profil", "inv_risque": None, "inv_secteurs": [], "inv_montant": 50,
              "inv_pack": None, "inv_idx": 0, "inv_kept": [], "inv_vus": []}.items():
@@ -97,12 +150,29 @@ CSS = f"""
 .block-container,[data-testid="stMainBlockContainer"]{{max-width:100%!important;width:100%!important;padding:2rem 3rem 3rem!important;}}
 .st-key-inv,.st-key-inv p,.st-key-inv div,.st-key-inv label,.st-key-inv button{{font-family:'Plus Jakarta Sans',sans-serif;}}
 .ms{{font-family:'Material Symbols Rounded';font-weight:normal;font-style:normal;line-height:1;display:inline-block;-webkit-font-feature-settings:'liga';font-feature-settings:'liga';}}
-.st-key-inv{{max-width:100%;margin:0 auto;background:#fff!important;border:1.5px solid #E3E8F3!important;border-radius:26px!important;padding:40px!important;box-shadow:0 8px 24px rgba(20,33,61,.08);}}
+.st-key-inv{{max-width:1000px;margin:0 auto;background:#fff!important;border-radius:28px!important;padding:32px 40px 30px!important;box-shadow:0 10px 30px rgba(20,33,61,.08);border:1.5px solid #E3E8F3!important;}}
+.st-key-inv .deck{{max-width:700px;margin-left:auto;margin-right:auto;}}
+.st-key-inv [class*="st-key-panel"]{{background:transparent!important;padding:0!important;}}
+.st-key-inv .st-key-panel_lock{{max-width:640px;margin:0 auto;}}
+.steps{{display:flex;gap:8px;flex-wrap:wrap;}}
+.steps span{{display:flex;align-items:center;gap:8px;background:#fff;color:{MUTE};font-weight:700;font-size:14px;padding:7px 14px 7px 8px;border-radius:99px;box-shadow:0 4px 12px rgba(20,33,61,.06);}}
+.steps span i{{font-style:normal;width:24px;height:24px;border-radius:50%;background:{SOFT};display:flex;align-items:center;justify-content:center;font-size:12.5px;}}
+.steps span.on{{background:{NAVY};color:#fff;}}
+.steps span.on i{{background:{YEL};color:{NAVY};}}
+.steps span.ok i{{background:#22C55E;color:#fff;}}
+.alloc{{display:flex;height:18px;border-radius:99px;overflow:hidden;margin:10px 0 8px;}}
+.alloc div{{height:100%;}}
+.legend{{display:flex;gap:16px;flex-wrap:wrap;font-size:13.5px;font-weight:700;color:{NAVY};}}
+.legend i{{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:6px;}}
+.big-amount{{font-size:40px;font-weight:800;color:{NAVY};line-height:1;}}
+.big-amount small{{font-size:16px;color:{MUTE};font-weight:700;}}
+.st-key-inv .st-key-card_actions{{max-width:700px;margin:0 auto;}}
 .i-top{{display:flex;justify-content:space-between;align-items:center;}}
 .i-brand{{font-weight:800;color:{NAVY};font-size:14px;letter-spacing:3px;}}
 .i-brand b{{color:{YEL};}}
 .i-step{{font-size:12.5px;font-weight:700;color:{MUTE};background:{SOFT};padding:4px 12px;border-radius:99px;}}
-.i-title{{font-size:27px;font-weight:800;color:{NAVY};margin:14px 0 4px;line-height:1.15;}}
+.i-top{{margin-bottom:4px;}}
+.i-title{{font-size:30px;font-weight:800;color:{NAVY};margin:14px 0 4px;line-height:1.15;}}
 .i-h{{font-size:17px;font-weight:800;color:{NAVY};margin:20px 0 10px;}}
 .i-hint{{font-size:13.5px;color:{MUTE};margin:6px 2px 0;}}
 .guide{{background:{LILAC};border-radius:18px;padding:14px 16px;margin:12px 0 6px;}}
@@ -157,6 +227,10 @@ CSS = f"""
 .st-key-inv [class*="st-key-pack_"] button{{width:100%!important;height:190px!important;border-radius:20px!important;border:none!important;
   display:flex!important;flex-direction:column!important;gap:10px;box-shadow:0 10px 0 rgba(0,0,0,.15)!important;transition:transform .15s;
   background-size:100% 18px,100% 18px!important;background-repeat:no-repeat!important;background-position:top,bottom!important;}}
+.st-key-inv [class*="st-key-pack_"] button > div,.st-key-inv [class*="st-key-pack_"] button > div > span{{display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:center!important;gap:12px!important;width:100%;}}
+.st-key-inv [class*="st-key-pack_"] button p{{text-align:center!important;}}
+.st-key-inv [class*="st-key-pack_"] button span:has(> [data-testid="stIconMaterial"]){{display:flex!important;height:auto!important;flex-shrink:0;margin:0!important;}}
+.st-key-inv [class*="st-key-pack_"] button [data-testid="stIconMaterial"]{{width:60px!important;height:60px!important;min-width:60px;min-height:60px;line-height:60px!important;flex-shrink:0;}}
 .st-key-inv [class*="st-key-pack_"] button:hover{{transform:translateY(-4px) rotate(-1.5deg);}}
 .st-key-inv [class*="st-key-pack_"] button p{{font-size:21px!important;font-weight:800!important;line-height:1.25!important;white-space:pre-line;}}
 .st-key-inv [class*="st-key-pack_"] button [data-testid="stIconMaterial"],.st-key-inv [class*="st-key-pack_"] button span[translate="no"]{{font-size:34px!important;width:58px;height:58px;border-radius:50%;
@@ -183,6 +257,25 @@ CSS = f"""
 .co{{position:relative;z-index:1;background:#fff;border:3px solid {NAVY};border-radius:22px;overflow:hidden;animation:pop .25s ease-out;}}
 @keyframes pop{{from{{transform:scale(.96);opacity:.4}}to{{transform:none;opacity:1}}}}
 .co-head{{background:{YEL};display:flex;justify-content:space-between;padding:10px 16px;font-weight:800;color:{NAVY};font-size:13.5px;}}
+.co-chart{{background:{NAVY};padding:14px 16px 10px;}}
+.co-perf{{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:6px;}}
+.co-perf span{{color:#93A3C8;font-size:12.5px;font-weight:700;text-transform:uppercase;letter-spacing:1px;}}
+.co-perf b{{font-size:24px;font-weight:800;}}
+.up{{color:#16A34A!important;font-weight:800;}} .co-perf b.up{{color:#4ADE80!important;}}
+.down{{color:#DC2626!important;font-weight:800;}} .co-perf b.down{{color:#F87171!important;}}
+.health{{background:{SOFT};border-radius:16px;padding:12px 14px;margin:4px 0 10px;}}
+.health-h{{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;font-weight:800;color:{NAVY};font-size:14.5px;}}
+.verdict{{font-size:12.5px;padding:3px 10px;border-radius:99px;}}
+.verdict.g{{background:#DCFCE7;color:#166534;}} .verdict.y{{background:#FFF3C4;color:#8A5A00;}} .verdict.r{{background:#FDE2E2;color:#991B1B;}}
+.ind{{display:flex;gap:10px;align-items:center;padding:7px 0;border-top:1px solid #DCE2EF;}}
+.ind:first-of-type{{border-top:none;}}
+.ind div{{flex:1;}}
+.ind b{{display:block;font-size:13.5px;color:{NAVY};}}
+.ind span{{font-size:12.5px;color:{MUTE};}}
+.ind em{{font-style:normal;font-weight:800;color:{NAVY};font-size:14px;}}
+.dot{{width:12px;height:12px;border-radius:50%;flex-shrink:0;}}
+.dot.g{{background:#22C55E;}} .dot.y{{background:#F59E0B;}} .dot.r{{background:#EF4444;}}
+.mini{{width:90px;margin:0 12px;}}
 .co-art{{background:{NAVY};height:150px;display:flex;align-items:center;justify-content:center;}}
 .co-art .ms{{font-size:76px;color:{YEL};}}
 .co-body{{padding:16px 18px 8px;}}
@@ -213,8 +306,15 @@ def html(s: str) -> None:
     st.markdown("\n".join(l.strip() for l in s.splitlines() if l.strip()), unsafe_allow_html=True)
 
 
+STEP_NAMES = ["Mon profil", "Mes paquets", "Ma sélection"]
+
+
 def header(title: str, step: str) -> None:
-    html(f'<div class="i-top"><span class="i-brand"><b>●</b> YELLO</span><span class="i-step">{step}</span></div>'
+    current = {"1 / 3": 1, "2 / 3": 2, "3 / 3": 3}.get(step, 2 if step.startswith("Carte") else 0)
+    chips = "".join(
+        f'<span class="{"on" if i == current else ("ok" if i < current else "")}"><i>{"✓" if i < current else i}</i>{n}</span>'
+        for i, n in enumerate(STEP_NAMES, 1))
+    html(f'<div class="i-top"><span class="i-brand"><b>●</b> YELLO · PROFIL INVESTISSEUR</span><div class="steps">{chips}</div></div>'
          f'<div class="i-title">{title}</div>')
 
 
@@ -238,14 +338,15 @@ def go(step: str, **kw) -> None:
 # Écrans
 # ---------------------------------------------------------------------------
 def ecran_verrouille() -> None:
-    header("Profil investisseur", "Verrouillé")
-    pct = round(niveau_pea / NIVEAUX_REQUIS * 100)
-    html(f"""<div class="locked"><span class="ms">lock</span>
+    with st.container(key="panel_lock"):
+        header("Profil investisseur", "Verrouillé")
+        pct = round(niveau_pea / NIVEAUX_REQUIS * 100)
+        html(f"""<div class="locked"><span class="ms">lock</span>
 <p class="i-hint" style="font-size:15.5px">Termine les <b>{NIVEAUX_REQUIS} niveaux</b> du parcours Investir pour débloquer ton profil investisseur et tes paquets de cartes.</p>
 <div class="bar"><i style="width:{max(pct, 3)}%"></i></div>
 <p class="i-hint"><b>{niveau_pea} / {NIVEAUX_REQUIS}</b> niveaux validés</p></div>""")
-    if action("Continuer le parcours Investir", "back_pea"):
-        st.switch_page("pages/5_ParcoursPEA.py")
+        if action("Continuer le parcours Investir", "back_pea"):
+            st.switch_page("pages/5_ParcoursPEA.py")
 
 
 def ecran_profil() -> None:
@@ -264,18 +365,18 @@ def ecran_profil() -> None:
     html('<div class="i-h">Ce qui t\'intéresse</div>')
     with st.container(key="pills_secteurs"):
         keys = list(SECTEURS)
-        for i in range(0, len(keys), 2):
-            cols = st.columns(2)
-            for col, k in zip(cols, keys[i:i + 2]):
+        for i in range(0, len(keys), 3):
+            cols = st.columns(3)
+            for col, k in zip(cols, keys[i:i + 3]):
                 on = k in ss.inv_secteurs
                 label = ("✓ " if on else "") + SECTEURS[k]["label"]
                 if col.button(label, key=f"sec_{k}", type="primary" if on else "secondary", use_container_width=True):
-                    ss.inv_secteurs = [s for s in ss.inv_secteurs if s != k] if on else ss.inv_secteurs + [k]
+                    ss.inv_secteurs = [x for x in ss.inv_secteurs if x != k] if on else ss.inv_secteurs + [k]
                     st.rerun()
 
     html('<div class="i-h">Combien par mois ?</div>')
     with st.container(key="montant"):
-        c1, c2, c3 = st.columns([1, 3, 1])
+        c1, c2, c3 = st.columns([1, 6, 1])
         if c1.button("−", key="moins"):
             ss.inv_montant = max(10, ss.inv_montant - 10)
             st.rerun()
@@ -289,7 +390,6 @@ def ecran_profil() -> None:
 
     pret = bool(ss.inv_risque and ss.inv_secteurs and ack)
     if action("Voir mes propositions", "voir", "y", disabled=not pret):
-        ss.pop("ollama_advice", None)
         go("paquets")
     if not pret:
         html('<p class="i-hint" style="text-align:center">Choisis un niveau de risque, au moins un secteur et coche la case.</p>')
@@ -302,9 +402,10 @@ def ecran_paquets() -> None:
     guide(f"{liste.capitalize()} : j'ai préparé un paquet pour chacun.")
 
     keys = ss.inv_secteurs
-    for i in range(0, len(keys), 2):
-        cols = st.columns(2)
-        for col, k in zip(cols, keys[i:i + 2]):
+    n = 3 if len(keys) >= 3 else 2
+    for i in range(0, len(keys), n):
+        cols = st.columns(n)
+        for col, k in zip(cols, keys[i:i + n]):
             s = SECTEURS[k]
             done = k in ss.inv_vus
             with col:
@@ -312,7 +413,7 @@ def ecran_paquets() -> None:
                     sous = "✓ Ouvert" if done else f"{len(CARTES[k])} cartes"
                     if st.button(f"{s['label']}\n{sous}", key=f"open_{k}", icon=f":material/{s['icon']}:", use_container_width=True):
                         go("cartes", inv_pack=k, inv_idx=0)
-    html('<p class="i-hint" style="text-align:center;margin-top:14px">Touche un paquet pour l\'ouvrir</p>')
+    html('<p class="i-hint" style="text-align:center;margin-top:14px">Clique sur un paquet pour l\'ouvrir</p>')
 
     c1, c2 = st.columns(2)
     with c1:
@@ -334,35 +435,43 @@ def ecran_cartes() -> None:
 
     nom, desc, siege, bourse, pea = cartes[idx]
     header(f"Paquet {s['label']}", f"Carte {idx + 1} sur {len(cartes)}")
-    if idx == 0:
-        guide(f"Trois entreprises qui collent à ton profil {ss.inv_risque.lower()}. Garde celles qui te parlent.")
-    else:
-        guide("Celle-ci te parle ? Garde-la, sinon passe à la suivante.")
+    sa = sante(nom)
+    v = sa["verdict"][0]
+    conseil = {"Solide": "ses indicateurs sont plutôt rassurants",
+               "Correcte": "certains indicateurs sont bons, d'autres à surveiller",
+               "Fragile": "plusieurs indicateurs sont dans le rouge : prudence"}[v]
+    intro = f"Trois entreprises du secteur, pour ton profil {ss.inv_risque.lower()}. " if idx == 0 else ""
+    guide(f"{intro}Pour <b>{nom}</b>, {conseil}. Un bon résultat passé ne garantit pas l'avenir.")
 
     pea_txt = '<b>Éligible</b>' if pea else '<b class="no">Non éligible</b>'
+    perf = sa["perf"]
+    perf_cls = "up" if perf >= 0 else "down"
+    rows = "".join(f'<div class="ind"><i class="dot {c}"></i><div><b>{t}</b><span>{e}</span></div><em>{val}</em></div>'
+                   for t, val, c, e in sa["ind"])
+    div_txt = f"{sa['div']:.1f} % par an" if sa["div"] > 0 else "Aucun (elle réinvestit ses bénéfices)"
     html(f"""<div class="deck"><div class="co">
 <div class="co-head"><span>{s['label']}</span><span>Action cotée</span></div>
-<div class="co-art"><span class="ms">{s['icon']}</span></div>
+<div class="co-chart"><div class="co-perf"><span>Cours sur 1 an</span><b class="{perf_cls}">{perf:+.1f} %</b></div>{sparkline(nom, perf, 110, dark=True)}</div>
 <div class="co-body">
 <div class="co-name">{nom}</div>
 <div class="co-desc">{desc}</div>
-<div class="co-row"><span>Siège</span><b>{siege}</b></div>
-<div class="co-row"><span>Bourse</span><b>{bourse}</b></div>
+<div class="health"><div class="health-h"><span>Santé financière</span><span class="verdict {sa['verdict'][1]}">{v}</span></div>{rows}</div>
+<div class="co-row"><span>Dividende</span><b>{div_txt}</b></div>
+<div class="co-row"><span>Siège · Bourse</span><b>{siege} · {bourse}</b></div>
 <div class="co-row"><span>PEA</span>{pea_txt}</div>
 </div></div></div>""")
     if not pea:
-        html('<p class="i-hint">Foncière cotée (SIIC) : non éligible au PEA, mais accessible avec un compte-titres.</p>')
-    html('<div class="warn">⚠️ Une action peut perdre de la valeur.</div>')
-
-    c1, c2 = st.columns(2)
-    with c1:
-        if action("Passer", "pass", "w"):
-            go("cartes", inv_idx=idx + 1)
-    with c2:
-        if action("Garder", "keep", "n"):
-            ss.pop("ollama_advice", None)
-            kept = [c for c in ss.inv_kept if c[0] != nom] + [(nom, k, pea)]
-            go("cartes", inv_idx=idx + 1, inv_kept=kept)
+        html('<p class="i-hint" style="text-align:center">Foncière cotée (SIIC) : non éligible au PEA, mais accessible avec un compte-titres.</p>')
+    with st.container(key="card_actions"):
+        html('<div class="warn">⚠️ Une action peut perdre de la valeur.</div>')
+        c1, c2 = st.columns(2)
+        with c1:
+            if action("Passer", "pass", "w"):
+                go("cartes", inv_idx=idx + 1)
+        with c2:
+            if action("Garder", "keep", "n"):
+                kept = [c for c in ss.inv_kept if c[0] != nom] + [(nom, k, pea)]
+                go("cartes", inv_idx=idx + 1, inv_kept=kept)
 
 
 def ecran_recap() -> None:
@@ -375,40 +484,20 @@ def ecran_recap() -> None:
     if not kept:
         guide("Tu n'as gardé aucune entreprise pour l'instant. Un fonds diversifié (ETF monde éligible au PEA) est souvent un bon point de départ.")
     else:
-        # Appel dynamique à Ollama !
-        if "ollama_advice" not in ss:
-            noms_entreprises = [n for n, k, p in kept]
-            prompt = (f"Agis comme un éducateur financier bienveillant. L'utilisateur a un profil {ss.inv_risque.lower()} "
-                      f"et investit {m}€ par mois. Il a choisi de mettre {etf_pct}% dans un ETF diversifié, et le reste "
-                      f"dans : {', '.join(noms_entreprises)}. Rédige un court paragraphe (3-4 phrases max) très encourageant "
-                      f"qui explique de manière éducative en quoi cette diversification est intéressante. "
-                      f"Termine par un mot d'encouragement. Réponds directement, sans introduction.")
-            
-            with st.spinner("🤖 Génération de l'analyse IA (via Llama 3 local)..."):
-                try:
-                    r = requests.post("http://localhost:11434/api/generate", json={
-                        "model": "llama3",
-                        "prompt": prompt,
-                        "stream": False
-                    }, timeout=10)
-                    if r.status_code == 200:
-                        ss.ollama_advice = r.json().get("response", "").strip()
-                    else:
-                        ss.ollama_advice = f"Profil **{ss.inv_risque.lower()}** avec {m} € par mois. Voici un exemple de répartition."
-                except Exception as e:
-                    ss.ollama_advice = f"Profil **{ss.inv_risque.lower()}** avec {m} € par mois. (Ollama non disponible)"
-        
-        guide(ss.ollama_advice)
+        guide(f"Profil <b>{ss.inv_risque.lower()}</b> avec {m} € par mois. Voici un exemple de répartition pour t'entraîner, pas un conseil.")
 
+    html(f"""<div class="alloc"><div style="width:{etf_pct}%;background:{BLUE}"></div><div style="width:{act_pct}%;background:{YEL}"></div></div>
+<div class="legend" style="margin-bottom:12px"><span><i style="background:{BLUE}"></i>Fonds diversifié {etf_pct} %</span><span><i style="background:{YEL}"></i>Actions choisies {act_pct} %</span></div>""")
     html(f'<div class="pick"><div><b>Fonds diversifié (ETF monde)</b><br><span>Base de ton portefeuille · {etf_pct} %</span></div><em>{m_etf} €</em></div>')
     if kept:
         part = round(m_act / len(kept), 1)
-        for nom, k, pea in kept:
+        for nom, kk, pea in kept:
             tag = '<span class="tag">PEA</span>' if pea else '<span class="tag no">Compte-titres</span>'
-            html(f'<div class="pick"><div><b>{nom}</b> {tag}<br><span>{SECTEURS[k]["label"]}</span></div><em>{part:g} €</em></div>')
-        html(f'<p class="i-hint">Part actions : {act_pct} % de ton montant mensuel, répartie entre tes {len(kept)} entreprise(s).</p>')
+            sa = sante(nom)
+            html(f'<div class="pick"><div style="flex:1"><b>{nom}</b> {tag}<br><span>{SECTEURS[kk]["label"]} · santé {sa["verdict"][0].lower()} · '
+                 f'<span class="{"up" if sa["perf"] >= 0 else "down"}">{sa["perf"]:+.1f} % sur 1 an</span></span></div>'
+                 f'<div class="mini" style="width:160px">{sparkline(nom, sa["perf"], 40)}</div><em>{part:g} €</em></div>')
 
-    # Récompense (une seule fois)
     if not ss.get("inv_badge"):
         user["xp_points"] = int(user.get("xp_points", 0) or 0) + 100
         badges = list(user.get("badges", []))
@@ -417,7 +506,7 @@ def ecran_recap() -> None:
         user["badges"] = badges
         ss["inv_badge"] = True
     profil = {"risque": ss.inv_risque, "secteurs": ss.inv_secteurs, "montant_mensuel": m,
-              "selection": [{"nom": n, "secteur": k, "pea": p} for n, k, p in kept],
+              "selection": [{"nom": n_, "secteur": k_, "pea": p_} for n_, k_, p_ in kept],
               "repartition": {"etf": etf_pct, "actions": act_pct}}
     ss["profil_investisseur"] = profil
     user["profil_investisseur"] = profil
@@ -439,4 +528,4 @@ with st.container(key="inv"):
         ecran_verrouille()
     else:
         {"profil": ecran_profil, "paquets": ecran_paquets, "cartes": ecran_cartes, "recap": ecran_recap}[ss.inv_step]()
-    html('<div class="foot">Information générale, pas un conseil en investissement.</div>')
+    html('<div class="foot">Entreprises et données fictives, pour la démonstration. Information générale, pas un conseil en investissement.</div>')

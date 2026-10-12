@@ -5,16 +5,6 @@ from models.message import ActionSuggestion
 
 
 FAQ_DATABASE = {
-    "opposition": {
-        "keywords": ["opposition", "perte carte", "vol carte", "bloquer carte"],
-        "answer": (
-            "Pour faire opposition sur votre carte Yello immédiatement :\n\n"
-            "1. Rendez-vous dans votre application > Menu Carte > 'Verrouiller temporairement' ou 'Faire opposition'.\n"
-            "2. Ou contactez le serveur vocal d'opposition disponible 24h/24 au 09 69 39 92 91.\n\n"
-            "Une nouvelle carte vous sera automatiquement envoyée sous 72h."
-        ),
-        "action": ActionSuggestion(action_type="LOCK_CARD", label="🔒 Bloquer ma carte maintenant")
-    },
     "rib": {
         "keywords": ["rib", "iban", "coordonnees bancaires"],
         "answer": (
