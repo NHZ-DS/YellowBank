@@ -120,19 +120,36 @@ class ApiService:
     def _call_cloud_llm(self, message: str) -> Optional[Dict[str, Any]]:
         """Interroge un LLM Cloud sécurisé (Llama 3 via Groq, Mistral, ou OpenAI) si configuré."""
         def _get_val(k: str) -> Optional[str]:
+            # 1. Variables d'environnement
+            v = os.getenv(k, "").strip() or os.getenv(k.lower(), "").strip()
+            if v:
+                return v.strip(' "\'')
+            # 2. Secrets Streamlit
             try:
                 import streamlit as st
-                if hasattr(st, "secrets") and k in st.secrets:
-                    return str(st.secrets[k]).strip()
-            except Exception:
-                pass
-            return os.getenv(k, "").strip() or None
+                if hasattr(st, "secrets"):
+                    # Clé directe
+                    if k in st.secrets:
+                        return str(st.secrets[k]).strip(' "\'')
+                    if k.lower() in st.secrets:
+                        return str(st.secrets[k.lower()]).strip(' "\'')
+                    # Clé dans une section TOML
+                    for _, sec_val in st.secrets.items():
+                        if isinstance(sec_val, dict):
+                            if k in sec_val:
+                                return str(sec_val[k]).strip(' "\'')
+                            if k.lower() in sec_val:
+                                return str(sec_val[k.lower()]).strip(' "\'')
+            except Exception as e:
+                print(f"[API_SERVICE] Lecture secrets: {e}")
+            return None
 
         groq_key = _get_val("GROQ_API_KEY")
         mistral_key = _get_val("MISTRAL_API_KEY")
         openai_key = _get_val("OPENAI_API_KEY")
 
         if not (groq_key or mistral_key or openai_key):
+            print("[API_SERVICE] Aucune clé Cloud détectée (GROQ_API_KEY / MISTRAL_API_KEY / OPENAI_API_KEY).")
             return None
 
         system_prompt = (
@@ -153,8 +170,8 @@ class ApiService:
 
         # 1. Option prioritaire : Groq (Llama 3 70B / 8B - Ultra-rapide et gratuit)
         if groq_key:
-            try:
-                for model_name in ["llama-3.3-70b-versatile", "llama-3.1-8b-instant", "llama3-8b-8192"]:
+            for model_name in ["llama-3.3-70b-versatile", "llama-3.1-8b-instant", "llama3-8b-8192"]:
+                try:
                     r = requests.post(
                         "https://api.groq.com/openai/v1/chat/completions",
                         headers={"Authorization": f"Bearer {groq_key}", "Content-Type": "application/json"},
@@ -168,13 +185,16 @@ class ApiService:
                     )
                     if r.status_code == 200:
                         ans = r.json()["choices"][0]["message"]["content"]
+                        print(f"[API_SERVICE] Succès Groq avec modèle {model_name} !")
                         return {
-                            "answer": ans, "content": ans, "confidence": 0.97, "confidence_score": 0.97,
+                            "answer": ans, "content": ans, "confidence": 0.98, "confidence_score": 0.98,
                             "agent": "rag", "sender_agent": "rag_agent",
-                            "sources": [{"title": "Base Documentaire Yello (Llama 3)", "snippet": "Réponse générée par Llama 3 via Groq Cloud sécurisé."}]
+                            "sources": [{"title": "Base Documentaire Yello (Llama 3)", "snippet": f"Généré en direct par Llama 3 ({model_name})."}]
                         }
-            except Exception:
-                pass
+                    else:
+                        print(f"[API_SERVICE] Groq erreur HTTP {r.status_code} ({model_name}): {r.text[:200]}")
+                except Exception as err:
+                    print(f"[API_SERVICE] Exception Groq ({model_name}): {err}")
 
         # 2. Option Mistral
         if mistral_key:
