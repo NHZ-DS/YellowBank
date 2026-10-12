@@ -148,26 +148,80 @@ class ApiService:
         except Exception:
             pass
 
-        # Fallback IA informatif si l'API ne répond pas
-        m_lower = message.lower()
-        if "pea" in m_lower or "investir" in m_lower or "bourse" in m_lower:
+        # Fallback IA autonome enrichi (utilisé sur Streamlit Cloud ou si l'API locale est inaccessible)
+        m_lower = message.lower().strip()
+
+        # 1. Salutations et présentations
+        if any(w in m_lower for w in ["bonjour", "salut", "hello", "coucou", "bonsoir", "qui es-tu", "qui es tu", "tu es qui"]):
+            ans = ("Bonjour ! Je suis Marcel, ton conseiller financier virtuel chez Yello 🤖.\n\n"
+                   "Je suis là pour t'accompagner sur tes finances : comment gérer ton budget, débloquer des aides "
+                   "(permis à 1 €, prêt étudiant) ou débuter en Bourse avec le PEA.\n\n"
+                   "Quelle question as-tu en tête aujourd'hui ?")
             return {
-                "answer": "Le Plan d'Épargne en Actions (PEA) permet d'investir sur les marchés européens avec une exonération d'impôt sur le revenu après 5 ans (seuls 17,2% de prélèvements sociaux s'appliquent). Pour débuter avec 100 €, privilégiez un ETF mondial diversifié. Avertissement : les investissements comportent un risque de perte en capital.",
-                "content": "Le Plan d'Épargne en Actions (PEA) permet d'investir sur les marchés européens avec une exonération d'impôt sur le revenu après 5 ans (seuls 17,2% de prélèvements sociaux s'appliquent). Pour débuter avec 100 €, privilégiez un ETF mondial diversifié. Avertissement : les investissements comportent un risque de perte en capital.",
-                "confidence": 0.94,
-                "confidence_score": 0.94,
-                "agent": "rag",
-                "sources": [{"title": "Guide Pratique PEA — Fiscalité 5 ans", "snippet": "Exonération totale d'impôt sur le revenu sur les plus-values après 5 ans."}]
+                "answer": ans, "content": ans, "confidence": 0.98, "confidence_score": 0.98,
+                "agent": "chitchat", "sender_agent": "chitchat_agent",
+                "sources": []
             }
-        else:
+
+        # 2. Remerciements et politesse
+        if any(w in m_lower for w in ["merci", "super", "parfait", "top", "au revoir"]):
+            ans = "Avec grand plaisir ! N'hésite pas si tu as d'autres questions sur tes projets ou ton épargne. Bonne journée !"
             return {
-                "answer": "Je consulte notre base de données certifiée. Pour gérer au mieux votre budget, veillez à garder un fonds de sécurité équivalent à 1 à 3 mois de dépenses courantes avant d'investir.",
-                "content": "Je consulte notre base de données certifiée. Pour gérer au mieux votre budget, veillez à garder un fonds de sécurité équivalent à 1 à 3 mois de dépenses courantes avant d'investir.",
-                "confidence": 0.88,
-                "confidence_score": 0.88,
-                "agent": "rag",
-                "sources": [{"title": "Guide Épargne & Budget", "snippet": "Un fonds de sécurité de 1 mois de dépenses est la première étape recommandée."}]
+                "answer": ans, "content": ans, "confidence": 0.99, "confidence_score": 0.99,
+                "agent": "chitchat", "sender_agent": "chitchat_agent",
+                "sources": []
             }
+
+        # 3. PEA & Bourse & Investissement
+        if any(w in m_lower for w in ["pea", "bourse", "action", "investir", "etf", "dividende", "5 ans"]):
+            ans = ("Le Plan d'Épargne en Actions (PEA) permet d'investir sur les actions et ETF européens. "
+                   "Ses atouts clés :\n"
+                   "• **Après 5 ans** : exonération totale d'impôt sur le revenu sur les plus-values (seuls les 17,2 % de prélèvements sociaux sont dus).\n"
+                   "• **Plafond** : jusqu'à 150 000 € de versements (20 000 € pour le PEA Jeune 18-25 ans rattaché au foyer fiscal).\n"
+                   "• **Pour démarrer** : un ETF indiciel monde diversifié permet de répartir le risque dès 50 € ou 100 € par mois.\n\n"
+                   "⚠️ *Rappel : tout investissement en Bourse comporte un risque de perte en capital.*")
+            return {
+                "answer": ans, "content": ans, "confidence": 0.95, "confidence_score": 0.95,
+                "agent": "rag", "sender_agent": "rag_agent",
+                "sources": [{"title": "Guide PEA & Investissement", "snippet": "Fiscalité avantageuse après 5 ans et diversification ETF."}]
+            }
+
+        # 4. Aides, Permis à 1€, Logement, Projets jeunes
+        if any(w in m_lower for w in ["permis", "aide", "projet", "pret", "prêt", "etudiant", "étudiant", "apl", "visale", "garantie"]):
+            ans = ("Plusieurs dispositifs clés sont disponibles pour financer tes projets jeunes :\n\n"
+                   "• **Permis à 1 € par jour** : un prêt à taux zéro jusqu'à 1 200 € où l'État prend en charge l'ensemble des intérêts (remboursement ~30 €/mois).\n"
+                   "• **Prêt étudiant garanti par l'État** : accessible jusqu'à 20 000 € sans caution parentale via Bpifrance.\n"
+                   "• **Logement & Aides** : l'APL de la CAF et la garantie Visale d'Action Logement pour avoir un garant gratuit.\n\n"
+                   "Tu peux retrouver le récapitulatif complet de ces aides dans le Parcours 3 (Projets & Aides) !")
+            return {
+                "answer": ans, "content": ans, "confidence": 0.93, "confidence_score": 0.93,
+                "agent": "rag", "sender_agent": "rag_agent",
+                "sources": [{"title": "Guide Aides & Projets Jeunes", "snippet": "Prêt permis 1 €/jour et prêt étudiant garanti par l'État."}]
+            }
+
+        # 5. Règle 50/30/20, Budget, Matelas d'épargne
+        if any(w in m_lower for w in ["50/30/20", "regle", "règle", "budget", "matelas", "securite", "sécurité", "imprevu", "imprévu", "combien garder"]):
+            ans = ("Pour bien structurer ton budget sans te priver, la règle **50 / 30 / 20** est la méthode de référence :\n\n"
+                   "• **50 % pour les besoins vitaux** : loyer, charges, courses alimentaires, transports essentiels.\n"
+                   "• **30 % pour les envies & loisirs** : sorties, abonnements, shopping, voyages.\n"
+                   "• **20 % pour l'épargne** : constituer en priorité un **matelas de sécurité** de 1 à 3 mois de dépenses sur un Livret A ou LDDS avant d'investir.")
+            return {
+                "answer": ans, "content": ans, "confidence": 0.94, "confidence_score": 0.94,
+                "agent": "rag", "sender_agent": "rag_agent",
+                "sources": [{"title": "Guide Épargne & Budget", "snippet": "Répartition 50/30/20 et matelas de précaution de 1 à 3 mois."}]
+            }
+
+        # 6. Question générale / non répertoriée
+        ans = (f"C'est une excellente question sur tes finances ! En tant que conseiller Yello, je te conseille d'explorer nos parcours éducatifs :\n\n"
+               "• **Parcours 1** pour maîtriser ton budget et tes imprévus.\n"
+               "• **Parcours 2 & Profil Investisseur** pour tout comprendre au PEA et à la Bourse.\n"
+               "• **Parcours 3** pour collecter toutes les aides d'État adaptées à ta situation.\n\n"
+               "Tu peux aussi me poser une question précise sur le PEA, le permis à 1 € ou ton matelas de précaution.")
+        return {
+            "answer": ans, "content": ans, "confidence": 0.88, "confidence_score": 0.88,
+            "agent": "rag", "sender_agent": "rag_agent",
+            "sources": [{"title": "Base Documentaire Yello", "snippet": "Guides officiels Épargne, PEA et Projets."}]
+        }
 
     def chat(self, message: str, user_id: int = 1, track: str = "courant") -> Dict[str, Any]:
         """Alias pour le chat avec Marcel."""
