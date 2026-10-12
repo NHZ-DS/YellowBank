@@ -1,0 +1,368 @@
+/* Charte graphique sobre, adulte et moderne pour Yello (YellowBank) */
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL@24,500,1');
+
+:root {
+    --primary: #E5A910;
+    --primary-hover: #D4980B;
+    --bg-dark: #0F172A;
+    --card-bg: #1E293B;
+    --card-border: rgba(229, 169, 16, 0.25);
+    --text-main: #F8FAFC;
+    --text-muted: #94A3B8;
+    --success: #10B981;
+    --warning: #F59E0B;
+    --danger: #EF4444;
+}
+
+/* En-tête Hero */
+.archipel-hero {
+    background: linear-gradient(135deg, #1E293B 0%, #0F172A 100%);
+    border: 1px solid var(--card-border);
+    border-radius: 12px;
+    padding: 24px;
+    margin-bottom: 24px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+}
+
+.archipel-title {
+    color: var(--primary);
+    font-size: 26px;
+    font-weight: 700;
+    margin-bottom: 6px;
+}
+
+.archipel-subtitle {
+    color: var(--text-muted);
+    font-size: 15px;
+    margin-bottom: 0px;
+}
+
+/* Cartes sobres (Jalons & Missions) */
+.mission-card {
+    background-color: var(--card-bg);
+    border-left: 4px solid var(--primary);
+    border-radius: 8px;
+    padding: 16px;
+    margin-bottom: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.mission-completed {
+    border-left-color: var(--success);
+    opacity: 0.85;
+}
+
+.badge-pill {
+    display: inline-block;
+    background-color: rgba(229, 169, 16, 0.15);
+    color: var(--primary);
+    border: 1px solid var(--primary);
+    border-radius: 20px;
+    padding: 4px 12px;
+    font-size: 13px;
+    font-weight: 600;
+    margin: 4px;
+}
+
+/* Boîte d'information Marché */
+.market-box {
+    background: #182234;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    padding: 18px;
+    margin-top: 15px;
+}
+
+.ambiance-stable {
+    color: #10B981;
+    font-weight: bold;
+}
+
+.ambiance-volatil {
+    color: #F59E0B;
+    font-weight: bold;
+}
+
+/* Avertissement réglementaire MiFID II */
+.legal-disclaimer {
+    font-size: 11px;
+    color: #94A3B8;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    padding-top: 8px;
+    margin-top: 14px;
+    font-style: italic;
+}
+
+/* ========================================================================= */
+/* ===== Yello : Menu latéral stylé (Navigation moderne & intuitive) ======= */
+/* ========================================================================= */
+
+[data-testid="stSidebar"] {
+    background: linear-gradient(180deg, #14213D 0%, #0E1730 100%) !important;
+    border-right: 1px solid rgba(255, 255, 255, 0.08) !important;
+}
+
+[data-testid="stSidebar"] [data-testid="stSidebarContent"] {
+    background: transparent !important;
+}
+
+[data-testid="stSidebarCollapseButton"] button,
+[data-testid="stSidebarCollapseButton"] svg {
+    color: #93A3C8 !important;
+}
+
+[data-testid="stSidebarNav"] {
+    padding-top: 8px;
+}
+
+[data-testid="stSidebarNav"]::before {
+    content: "● YELLO";
+    display: block;
+    padding: 0 20px 16px;
+    font-weight: 800;
+    letter-spacing: 4px;
+    font-size: 21px;
+    color: #FFC83D;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+}
+
+[data-testid="stSidebarNavItems"] {
+    padding: 0 12px !important;
+}
+
+[data-testid="stSidebarNavItems"] li {
+    margin: 4px 0 !important;
+}
+
+[data-testid="stSidebarNavLink"] {
+    display: flex !important;
+    align-items: center !important;
+    gap: 12px !important;
+    padding: 8px 12px !important;
+    border-radius: 14px !important;
+    background: transparent !important;
+    transition: all 0.18s ease-in-out !important;
+    height: auto !important;
+    text-decoration: none !important;
+}
+
+[data-testid="stSidebarNavLink"]:hover {
+    background: rgba(255, 255, 255, 0.08) !important;
+    transform: translateX(3px) !important;
+}
+
+[data-testid="stSidebarNavLink"][aria-current="page"] {
+    background: rgba(255, 255, 255, 0.14) !important;
+    box-shadow: inset 3.5px 0 0 #FFC83D !important;
+}
+
+/* Pastille icône pour chaque lien */
+[data-testid="stSidebarNavLink"]::before {
+    font-family: 'Material Symbols Rounded' !important;
+    font-variation-settings: 'FILL' 1 !important;
+    font-size: 20px !important;
+    line-height: 1 !important;
+    -webkit-font-feature-settings: 'liga';
+    font-feature-settings: 'liga';
+    width: 36px !important;
+    height: 36px !important;
+    min-width: 36px !important;
+    border-radius: 11px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25) !important;
+    background: #5F6A85;
+    color: #fff;
+    content: "circle";
+    flex-shrink: 0;
+}
+
+/* Masquage du texte original brut et substitution élégante */
+[data-testid="stSidebarNavLink"] span,
+[data-testid="stSidebarNavLink"] span p,
+[data-testid="stSidebarNavLink"] [data-testid="stSidebarNavLinkText"] {
+    color: #C9D1F5 !important;
+    font-weight: 700 !important;
+    font-size: 0px !important;
+    line-height: 1.2 !important;
+    font-family: 'Plus Jakarta Sans', sans-serif !important;
+}
+
+[data-testid="stSidebarNavLink"] span::after,
+[data-testid="stSidebarNavLink"] span p::after,
+[data-testid="stSidebarNavLink"] [data-testid="stSidebarNavLinkText"]::after {
+    font-size: 15px !important;
+    color: #C9D1F5 !important;
+    font-weight: 700 !important;
+}
+
+[data-testid="stSidebarNavLink"][aria-current="page"] span::after,
+[data-testid="stSidebarNavLink"][aria-current="page"] span p::after,
+[data-testid="stSidebarNavLink"][aria-current="page"] [data-testid="stSidebarNavLinkText"]::after {
+    color: #FFFFFF !important;
+}
+
+/* ------------------------------------------------------------------------- */
+/* Assignation des Icônes et Textes personnalisés pour chaque page           */
+/* ------------------------------------------------------------------------- */
+
+/* 1. Accueil */
+[data-testid="stSidebarNavLink"][href$="/"]::before,
+[data-testid="stSidebarNavLink"][href*="Home"]::before,
+[data-testid="stSidebarNavLink"]:has(span[label="Home"])::before {
+    content: "home" !important; background: #FFC83D !important; color: #14213D !important;
+}
+[data-testid="stSidebarNavLink"][href$="/"] span::after,
+[data-testid="stSidebarNavLink"][href*="Home"] span::after,
+[data-testid="stSidebarNavLink"]:has(span[label="Home"]) span::after,
+[data-testid="stSidebarNavLink"]:has(span[label="Home"]) span p::after {
+    content: "Accueil" !important;
+}
+
+/* 2. Questionnaire */
+[data-testid="stSidebarNavLink"][href*="Questionnaire"]::before,
+[data-testid="stSidebarNavLink"]:has(span[label="Questionnaire"])::before {
+    content: "quiz" !important; background: #8B5CF6 !important; color: #fff !important;
+}
+[data-testid="stSidebarNavLink"][href*="Questionnaire"] span::after,
+[data-testid="stSidebarNavLink"]:has(span[label="Questionnaire"]) span::after,
+[data-testid="stSidebarNavLink"]:has(span[label="Questionnaire"]) span p::after {
+    content: "Questionnaire" !important;
+}
+
+/* 3. Situation */
+[data-testid="stSidebarNavLink"][href*="Situation"]::before,
+[data-testid="stSidebarNavLink"]:has(span[label="Situation"])::before {
+    content: "insights" !important; background: #3B82F6 !important; color: #fff !important;
+}
+[data-testid="stSidebarNavLink"][href*="Situation"] span::after,
+[data-testid="stSidebarNavLink"]:has(span[label="Situation"]) span::after,
+[data-testid="stSidebarNavLink"]:has(span[label="Situation"]) span p::after {
+    content: "Ma situation" !important;
+}
+
+/* 4. Le plateau des parcours */
+[data-testid="stSidebarNavLink"][href*="3_Parcours"]::before,
+[data-testid="stSidebarNavLink"][href$="/Parcours"]::before,
+[data-testid="stSidebarNavLink"]:has(span[label="Parcours"])::before {
+    content: "map" !important; background: #F97316 !important; color: #fff !important;
+}
+[data-testid="stSidebarNavLink"][href*="3_Parcours"] span::after,
+[data-testid="stSidebarNavLink"][href$="/Parcours"] span::after,
+[data-testid="stSidebarNavLink"]:has(span[label="Parcours"]) span::after,
+[data-testid="stSidebarNavLink"]:has(span[label="Parcours"]) span p::after {
+    content: "Le plateau" !important;
+}
+
+/* 5. Épargner & Budget */
+[data-testid="stSidebarNavLink"][href*="ParcoursCourant"]::before,
+[data-testid="stSidebarNavLink"]:has(span[label="ParcoursCourant"])::before {
+    content: "savings" !important; background: #22C55E !important; color: #fff !important;
+}
+[data-testid="stSidebarNavLink"][href*="ParcoursCourant"] span::after,
+[data-testid="stSidebarNavLink"]:has(span[label="ParcoursCourant"]) span::after,
+[data-testid="stSidebarNavLink"]:has(span[label="ParcoursCourant"]) span p::after {
+    content: "Épargner & budget" !important;
+}
+
+/* 6. Investir & PEA */
+[data-testid="stSidebarNavLink"][href*="ParcoursPEA"]::before,
+[data-testid="stSidebarNavLink"]:has(span[label="ParcoursPEA"])::before {
+    content: "trending_up" !important; background: #14B8A6 !important; color: #fff !important;
+}
+[data-testid="stSidebarNavLink"][href*="ParcoursPEA"] span::after,
+[data-testid="stSidebarNavLink"]:has(span[label="ParcoursPEA"]) span::after,
+[data-testid="stSidebarNavLink"]:has(span[label="ParcoursPEA"]) span p::after {
+    content: "Investir & PEA" !important;
+}
+
+/* 7. Projets & Aides */
+[data-testid="stSidebarNavLink"][href*="ParcoursProjet"]::before,
+[data-testid="stSidebarNavLink"]:has(span[label="ParcoursProjet"])::before {
+    content: "school" !important; background: #EC4899 !important; color: #fff !important;
+}
+[data-testid="stSidebarNavLink"][href*="ParcoursProjet"] span::after,
+[data-testid="stSidebarNavLink"]:has(span[label="ParcoursProjet"]) span::after,
+[data-testid="stSidebarNavLink"]:has(span[label="ParcoursProjet"]) span p::after {
+    content: "Projets & aides" !important;
+}
+
+/* 8. Tableau de bord */
+[data-testid="stSidebarNavLink"][href*="Dashboard"]::before,
+[data-testid="stSidebarNavLink"]:has(span[label="Dashboard"])::before {
+    content: "dashboard" !important; background: #1F2BE0 !important; color: #fff !important;
+}
+[data-testid="stSidebarNavLink"][href*="Dashboard"] span::after,
+[data-testid="stSidebarNavLink"]:has(span[label="Dashboard"]) span::after,
+[data-testid="stSidebarNavLink"]:has(span[label="Dashboard"]) span p::after {
+    content: "Tableau de bord" !important;
+}
+
+/* 9. Marcel, conseiller IA */
+[data-testid="stSidebarNavLink"][href*="Chat"]::before,
+[data-testid="stSidebarNavLink"]:has(span[label="Chat"])::before {
+    content: "smart_toy" !important; background: #F59E0B !important; color: #14213D !important;
+}
+[data-testid="stSidebarNavLink"][href*="Chat"] span::after,
+[data-testid="stSidebarNavLink"]:has(span[label="Chat"]) span::after,
+[data-testid="stSidebarNavLink"]:has(span[label="Chat"]) span p::after {
+    content: "Marcel, conseiller IA" !important;
+}
+
+/* 10. Profil investisseur */
+[data-testid="stSidebarNavLink"][href*="ProfilInvestisseur"]::before,
+[data-testid="stSidebarNavLink"][href*="Profil_Investisseur"]::before,
+[data-testid="stSidebarNavLink"]:has(span[label*="Profil"])::before {
+    content: "query_stats" !important; background: #6366F1 !important; color: #fff !important;
+}
+[data-testid="stSidebarNavLink"][href*="ProfilInvestisseur"] span::after,
+[data-testid="stSidebarNavLink"][href*="Profil_Investisseur"] span::after,
+[data-testid="stSidebarNavLink"]:has(span[label*="Profil"]) span::after,
+[data-testid="stSidebarNavLink"]:has(span[label*="Profil"]) span p::after {
+    content: "Profil investisseur" !important;
+}
+
+/* ------------------------------------------------------------------------- */
+/* Titres des groupes thématiques de navigation                              */
+/* ------------------------------------------------------------------------- */
+
+[data-testid="stSidebarNavItems"] li:first-child::before,
+[data-testid="stSidebarNavItems"] li:has(a[href$="/"])::before,
+[data-testid="stSidebarNavItems"] li:has(a[href*="Home"])::before {
+    content: "Démarrer" !important;
+    display: block !important;
+    padding: 6px 10px 6px !important;
+    font-size: 11px !important;
+    font-weight: 800 !important;
+    letter-spacing: 2px !important;
+    text-transform: uppercase !important;
+    color: #6C7A9C !important;
+}
+
+[data-testid="stSidebarNavItems"] li:has(a[href*="ParcoursCourant"])::before {
+    content: "Mes parcours" !important;
+    display: block !important;
+    padding: 16px 10px 6px !important;
+    font-size: 11px !important;
+    font-weight: 800 !important;
+    letter-spacing: 2px !important;
+    text-transform: uppercase !important;
+    color: #6C7A9C !important;
+}
+
+[data-testid="stSidebarNavItems"] li:has(a[href*="Dashboard"])::before {
+    content: "Mon suivi" !important;
+    display: block !important;
+    padding: 16px 10px 6px !important;
+    font-size: 11px !important;
+    font-weight: 800 !important;
+    letter-spacing: 2px !important;
+    text-transform: uppercase !important;
+    color: #6C7A9C !important;
+}
+
+[data-testid="stSidebarNavSeparator"] {
+    display: none !important;
+}

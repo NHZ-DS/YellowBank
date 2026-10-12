@@ -1,4 +1,6 @@
-/* Charte graphique sobre, adulte et moderne pour Yello (Yello) */
+/* Charte graphique sobre, adulte et moderne pour Yello (YellowBank) */
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL@24,500,1');
 
 :root {
     --primary: #E5A910;
@@ -92,53 +94,275 @@
     font-style: italic;
 }
 
-/* ===== Yello : menu latéral stylé ===== */
-@import url('https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL@24,500,1');
+/* ========================================================================= */
+/* ===== Yello : Menu latéral stylé (Navigation moderne & intuitive) ======= */
+/* ========================================================================= */
 
-[data-testid="stSidebar"]{background:linear-gradient(180deg,#14213D 0%,#0E1730 100%)!important;border-right:none!important;}
-[data-testid="stSidebar"] [data-testid="stSidebarContent"]{background:transparent!important;}
-[data-testid="stSidebarCollapseButton"] button,[data-testid="stSidebarCollapseButton"] svg{color:#93A3C8!important;}
-[data-testid="stSidebarNav"]{padding-top:4px;}
-[data-testid="stSidebarNav"]::before{content:"YELLO";display:block;padding:0 22px 14px;font-weight:800;letter-spacing:4px;font-size:20px;color:#FFC83D;}
-[data-testid="stSidebarNavItems"]{padding:0 12px!important;}
-[data-testid="stSidebarNavItems"] li{margin:3px 0;}
-[data-testid="stSidebarNavLink"]{display:flex!important;align-items:center!important;gap:12px;padding:7px 10px!important;border-radius:14px!important;
-  background:transparent!important;transition:background .15s,transform .15s;height:auto!important;}
-[data-testid="stSidebarNavLink"]:hover{background:rgba(255,255,255,.07)!important;transform:translateX(3px);}
-[data-testid="stSidebarNavLink"][aria-current="page"]{background:rgba(255,255,255,.12)!important;box-shadow:inset 3px 0 0 #FFC83D;}
-[data-testid="stSidebarNavLink"]::before{font-family:'Material Symbols Rounded';font-variation-settings:'FILL' 1;font-size:20px;line-height:1;
-  -webkit-font-feature-settings:'liga';font-feature-settings:'liga';
-  width:36px;height:36px;min-width:36px;border-radius:11px;display:flex;align-items:center;justify-content:center;
-  box-shadow:0 4px 10px rgba(0,0,0,.25);background:#5F6A85;color:#fff;content:"circle";}
-[data-testid="stSidebarNavLink"] span p{color:#C9D1F5!important;font-weight:700!important;font-size:0!important;}
-[data-testid="stSidebarNavLink"] span p::after{font-size:15px;}
-[data-testid="stSidebarNavLink"][aria-current="page"] span p{color:#fff!important;}
-[data-testid="stSidebarNavItems"] li.yello-group-start{margin-top:18px;}
-[data-testid="stSidebarNavLink"]:has(span[label="Home"])::before{content:"home";background:#FFC83D;color:#14213D;}
-[data-testid="stSidebarNavLink"]:has(span[label="Home"]) span p::after{content:"Accueil";}
-[data-testid="stSidebarNavLink"]:has(span[label="Questionnaire"])::before{content:"quiz";background:#8B5CF6;color:#fff;}
-[data-testid="stSidebarNavLink"]:has(span[label="Questionnaire"]) span p::after{content:"Questionnaire";}
-[data-testid="stSidebarNavLink"]:has(span[label="Situation"])::before{content:"insights";background:#3B82F6;color:#fff;}
-[data-testid="stSidebarNavLink"]:has(span[label="Situation"]) span p::after{content:"Ma situation";}
-[data-testid="stSidebarNavLink"]:has(span[label="Parcours"])::before{content:"map";background:#F97316;color:#fff;}
-[data-testid="stSidebarNavLink"]:has(span[label="Parcours"]) span p::after{content:"Le plateau";}
-[data-testid="stSidebarNavLink"]:has(span[label="ParcoursCourant"])::before{content:"savings";background:#22C55E;color:#fff;}
-[data-testid="stSidebarNavLink"]:has(span[label="ParcoursCourant"]) span p::after{content:"Épargner & budget";}
-[data-testid="stSidebarNavLink"]:has(span[label="ParcoursPEA"])::before{content:"trending_up";background:#14B8A6;color:#fff;}
-[data-testid="stSidebarNavLink"]:has(span[label="ParcoursPEA"]) span p::after{content:"Investir & PEA";}
-[data-testid="stSidebarNavLink"]:has(span[label="ParcoursProjet"])::before{content:"school";background:#EC4899;color:#fff;}
-[data-testid="stSidebarNavLink"]:has(span[label="ParcoursProjet"]) span p::after{content:"Projets & aides";}
-[data-testid="stSidebarNavLink"]:has(span[label="Dashboard"])::before{content:"dashboard";background:#1F2BE0;color:#fff;}
-[data-testid="stSidebarNavLink"]:has(span[label="Dashboard"]) span p::after{content:"Tableau de bord";}
-[data-testid="stSidebarNavLink"]:has(span[label="Chat"])::before{content:"smart_toy";background:#F59E0B;color:#14213D;}
-[data-testid="stSidebarNavLink"]:has(span[label="Chat"]) span p::after{content:"Marcel, conseiller IA";}
-[data-testid="stSidebarNavLink"]:has(span[label="ProfilInvestisseur"])::before{content:"query_stats";background:#6366F1;color:#fff;}
-[data-testid="stSidebarNavLink"]:has(span[label="ProfilInvestisseur"]) span p::after{content:"Profil investisseur";}
-[data-testid="stSidebarNavLink"]:has(span[label="Profil Investisseur"])::before{content:"query_stats";background:#6366F1;color:#fff;}
-[data-testid="stSidebarNavLink"]:has(span[label="Profil Investisseur"]) span p::after{content:"Profil investisseur";}
-[data-testid="stSidebarNavLink"]:has(span[label="Profil_Investisseur"])::before{content:"query_stats";background:#6366F1;color:#fff;}
-[data-testid="stSidebarNavLink"]:has(span[label="Profil_Investisseur"]) span p::after{content:"Profil investisseur";}
-[data-testid="stSidebarNavItems"] li:has(span[label="Home"])::before{content:"Démarrer";display:block;padding:4px 10px 6px;font-size:11.5px;font-weight:800;letter-spacing:1.8px;text-transform:uppercase;color:#5F6E93;}
-[data-testid="stSidebarNavItems"] li:has(span[label="ParcoursCourant"])::before{content:"Mes parcours";display:block;padding:16px 10px 6px;font-size:11.5px;font-weight:800;letter-spacing:1.8px;text-transform:uppercase;color:#5F6E93;}
-[data-testid="stSidebarNavItems"] li:has(span[label="Dashboard"])::before{content:"Mon suivi";display:block;padding:16px 10px 6px;font-size:11.5px;font-weight:800;letter-spacing:1.8px;text-transform:uppercase;color:#5F6E93;}
-[data-testid="stSidebarNavSeparator"]{display:none!important;}
+[data-testid="stSidebar"] {
+    background: linear-gradient(180deg, #14213D 0%, #0E1730 100%) !important;
+    border-right: 1px solid rgba(255, 255, 255, 0.08) !important;
+}
+
+[data-testid="stSidebar"] [data-testid="stSidebarContent"] {
+    background: transparent !important;
+}
+
+[data-testid="stSidebarCollapseButton"] button,
+[data-testid="stSidebarCollapseButton"] svg {
+    color: #93A3C8 !important;
+}
+
+[data-testid="stSidebarNav"] {
+    padding-top: 8px;
+}
+
+[data-testid="stSidebarNav"]::before {
+    content: "● YELLO";
+    display: block;
+    padding: 0 20px 16px;
+    font-weight: 800;
+    letter-spacing: 4px;
+    font-size: 21px;
+    color: #FFC83D;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+}
+
+[data-testid="stSidebarNavItems"] {
+    padding: 0 12px !important;
+}
+
+[data-testid="stSidebarNavItems"] li {
+    margin: 4px 0 !important;
+}
+
+[data-testid="stSidebarNavLink"] {
+    display: flex !important;
+    align-items: center !important;
+    gap: 12px !important;
+    padding: 8px 12px !important;
+    border-radius: 14px !important;
+    background: transparent !important;
+    transition: all 0.18s ease-in-out !important;
+    height: auto !important;
+    text-decoration: none !important;
+}
+
+[data-testid="stSidebarNavLink"]:hover {
+    background: rgba(255, 255, 255, 0.08) !important;
+    transform: translateX(3px) !important;
+}
+
+[data-testid="stSidebarNavLink"][aria-current="page"] {
+    background: rgba(255, 255, 255, 0.14) !important;
+    box-shadow: inset 3.5px 0 0 #FFC83D !important;
+}
+
+/* Pastille icône pour chaque lien */
+[data-testid="stSidebarNavLink"]::before {
+    font-family: 'Material Symbols Rounded' !important;
+    font-variation-settings: 'FILL' 1 !important;
+    font-size: 20px !important;
+    line-height: 1 !important;
+    -webkit-font-feature-settings: 'liga';
+    font-feature-settings: 'liga';
+    width: 36px !important;
+    height: 36px !important;
+    min-width: 36px !important;
+    border-radius: 11px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25) !important;
+    background: #5F6A85;
+    color: #fff;
+    content: "circle";
+    flex-shrink: 0;
+}
+
+/* Masquage du texte original brut et substitution élégante */
+[data-testid="stSidebarNavLink"] span,
+[data-testid="stSidebarNavLink"] span p,
+[data-testid="stSidebarNavLink"] [data-testid="stSidebarNavLinkText"] {
+    color: #C9D1F5 !important;
+    font-weight: 700 !important;
+    font-size: 0px !important;
+    line-height: 1.2 !important;
+    font-family: 'Plus Jakarta Sans', sans-serif !important;
+}
+
+[data-testid="stSidebarNavLink"] span::after,
+[data-testid="stSidebarNavLink"] span p::after,
+[data-testid="stSidebarNavLink"] [data-testid="stSidebarNavLinkText"]::after {
+    font-size: 15px !important;
+    color: #C9D1F5 !important;
+    font-weight: 700 !important;
+}
+
+[data-testid="stSidebarNavLink"][aria-current="page"] span::after,
+[data-testid="stSidebarNavLink"][aria-current="page"] span p::after,
+[data-testid="stSidebarNavLink"][aria-current="page"] [data-testid="stSidebarNavLinkText"]::after {
+    color: #FFFFFF !important;
+}
+
+/* ------------------------------------------------------------------------- */
+/* Assignation des Icônes et Textes personnalisés pour chaque page           */
+/* ------------------------------------------------------------------------- */
+
+/* 1. Accueil */
+[data-testid="stSidebarNavLink"][href$="/"]::before,
+[data-testid="stSidebarNavLink"][href*="Home"]::before,
+[data-testid="stSidebarNavLink"]:has(span[label="Home"])::before {
+    content: "home" !important; background: #FFC83D !important; color: #14213D !important;
+}
+[data-testid="stSidebarNavLink"][href$="/"] span::after,
+[data-testid="stSidebarNavLink"][href*="Home"] span::after,
+[data-testid="stSidebarNavLink"]:has(span[label="Home"]) span::after,
+[data-testid="stSidebarNavLink"]:has(span[label="Home"]) span p::after {
+    content: "Accueil" !important;
+}
+
+/* 2. Questionnaire */
+[data-testid="stSidebarNavLink"][href*="Questionnaire"]::before,
+[data-testid="stSidebarNavLink"]:has(span[label="Questionnaire"])::before {
+    content: "quiz" !important; background: #8B5CF6 !important; color: #fff !important;
+}
+[data-testid="stSidebarNavLink"][href*="Questionnaire"] span::after,
+[data-testid="stSidebarNavLink"]:has(span[label="Questionnaire"]) span::after,
+[data-testid="stSidebarNavLink"]:has(span[label="Questionnaire"]) span p::after {
+    content: "Questionnaire" !important;
+}
+
+/* 3. Situation */
+[data-testid="stSidebarNavLink"][href*="Situation"]::before,
+[data-testid="stSidebarNavLink"]:has(span[label="Situation"])::before {
+    content: "insights" !important; background: #3B82F6 !important; color: #fff !important;
+}
+[data-testid="stSidebarNavLink"][href*="Situation"] span::after,
+[data-testid="stSidebarNavLink"]:has(span[label="Situation"]) span::after,
+[data-testid="stSidebarNavLink"]:has(span[label="Situation"]) span p::after {
+    content: "Ma situation" !important;
+}
+
+/* 4. Le plateau des parcours */
+[data-testid="stSidebarNavLink"][href*="3_Parcours"]::before,
+[data-testid="stSidebarNavLink"][href$="/Parcours"]::before,
+[data-testid="stSidebarNavLink"]:has(span[label="Parcours"])::before {
+    content: "map" !important; background: #F97316 !important; color: #fff !important;
+}
+[data-testid="stSidebarNavLink"][href*="3_Parcours"] span::after,
+[data-testid="stSidebarNavLink"][href$="/Parcours"] span::after,
+[data-testid="stSidebarNavLink"]:has(span[label="Parcours"]) span::after,
+[data-testid="stSidebarNavLink"]:has(span[label="Parcours"]) span p::after {
+    content: "Le plateau" !important;
+}
+
+/* 5. Épargner & Budget */
+[data-testid="stSidebarNavLink"][href*="ParcoursCourant"]::before,
+[data-testid="stSidebarNavLink"]:has(span[label="ParcoursCourant"])::before {
+    content: "savings" !important; background: #22C55E !important; color: #fff !important;
+}
+[data-testid="stSidebarNavLink"][href*="ParcoursCourant"] span::after,
+[data-testid="stSidebarNavLink"]:has(span[label="ParcoursCourant"]) span::after,
+[data-testid="stSidebarNavLink"]:has(span[label="ParcoursCourant"]) span p::after {
+    content: "Épargner & budget" !important;
+}
+
+/* 6. Investir & PEA */
+[data-testid="stSidebarNavLink"][href*="ParcoursPEA"]::before,
+[data-testid="stSidebarNavLink"]:has(span[label="ParcoursPEA"])::before {
+    content: "trending_up" !important; background: #14B8A6 !important; color: #fff !important;
+}
+[data-testid="stSidebarNavLink"][href*="ParcoursPEA"] span::after,
+[data-testid="stSidebarNavLink"]:has(span[label="ParcoursPEA"]) span::after,
+[data-testid="stSidebarNavLink"]:has(span[label="ParcoursPEA"]) span p::after {
+    content: "Investir & PEA" !important;
+}
+
+/* 7. Projets & Aides */
+[data-testid="stSidebarNavLink"][href*="ParcoursProjet"]::before,
+[data-testid="stSidebarNavLink"]:has(span[label="ParcoursProjet"])::before {
+    content: "school" !important; background: #EC4899 !important; color: #fff !important;
+}
+[data-testid="stSidebarNavLink"][href*="ParcoursProjet"] span::after,
+[data-testid="stSidebarNavLink"]:has(span[label="ParcoursProjet"]) span::after,
+[data-testid="stSidebarNavLink"]:has(span[label="ParcoursProjet"]) span p::after {
+    content: "Projets & aides" !important;
+}
+
+/* 8. Tableau de bord */
+[data-testid="stSidebarNavLink"][href*="Dashboard"]::before,
+[data-testid="stSidebarNavLink"]:has(span[label="Dashboard"])::before {
+    content: "dashboard" !important; background: #1F2BE0 !important; color: #fff !important;
+}
+[data-testid="stSidebarNavLink"][href*="Dashboard"] span::after,
+[data-testid="stSidebarNavLink"]:has(span[label="Dashboard"]) span::after,
+[data-testid="stSidebarNavLink"]:has(span[label="Dashboard"]) span p::after {
+    content: "Tableau de bord" !important;
+}
+
+/* 9. Marcel, conseiller IA */
+[data-testid="stSidebarNavLink"][href*="Chat"]::before,
+[data-testid="stSidebarNavLink"]:has(span[label="Chat"])::before {
+    content: "smart_toy" !important; background: #F59E0B !important; color: #14213D !important;
+}
+[data-testid="stSidebarNavLink"][href*="Chat"] span::after,
+[data-testid="stSidebarNavLink"]:has(span[label="Chat"]) span::after,
+[data-testid="stSidebarNavLink"]:has(span[label="Chat"]) span p::after {
+    content: "Marcel, conseiller IA" !important;
+}
+
+/* 10. Profil investisseur */
+[data-testid="stSidebarNavLink"][href*="ProfilInvestisseur"]::before,
+[data-testid="stSidebarNavLink"][href*="Profil_Investisseur"]::before,
+[data-testid="stSidebarNavLink"]:has(span[label*="Profil"])::before {
+    content: "query_stats" !important; background: #6366F1 !important; color: #fff !important;
+}
+[data-testid="stSidebarNavLink"][href*="ProfilInvestisseur"] span::after,
+[data-testid="stSidebarNavLink"][href*="Profil_Investisseur"] span::after,
+[data-testid="stSidebarNavLink"]:has(span[label*="Profil"]) span::after,
+[data-testid="stSidebarNavLink"]:has(span[label*="Profil"]) span p::after {
+    content: "Profil investisseur" !important;
+}
+
+/* ------------------------------------------------------------------------- */
+/* Titres des groupes thématiques de navigation                              */
+/* ------------------------------------------------------------------------- */
+
+[data-testid="stSidebarNavItems"] li:first-child::before,
+[data-testid="stSidebarNavItems"] li:has(a[href$="/"])::before,
+[data-testid="stSidebarNavItems"] li:has(a[href*="Home"])::before {
+    content: "Démarrer" !important;
+    display: block !important;
+    padding: 6px 10px 6px !important;
+    font-size: 11px !important;
+    font-weight: 800 !important;
+    letter-spacing: 2px !important;
+    text-transform: uppercase !important;
+    color: #6C7A9C !important;
+}
+
+[data-testid="stSidebarNavItems"] li:has(a[href*="ParcoursCourant"])::before {
+    content: "Mes parcours" !important;
+    display: block !important;
+    padding: 16px 10px 6px !important;
+    font-size: 11px !important;
+    font-weight: 800 !important;
+    letter-spacing: 2px !important;
+    text-transform: uppercase !important;
+    color: #6C7A9C !important;
+}
+
+[data-testid="stSidebarNavItems"] li:has(a[href*="Dashboard"])::before {
+    content: "Mon suivi" !important;
+    display: block !important;
+    padding: 16px 10px 6px !important;
+    font-size: 11px !important;
+    font-weight: 800 !important;
+    letter-spacing: 2px !important;
+    text-transform: uppercase !important;
+    color: #6C7A9C !important;
+}
+
+[data-testid="stSidebarNavSeparator"] {
+    display: none !important;
+}
