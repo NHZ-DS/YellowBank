@@ -22,3 +22,8 @@ ENV/
 # Logs & Données temporaires
 *.log
 data/embeddings/vector_cache.json
+
+# Binaires & Exécutables
+*.exe
+cloudflared.exe
+
